@@ -3,6 +3,7 @@ import { z } from 'zod'
 
 import { ChartFigure } from '@/api/models/Chart'
 import { Chart, SingleCategoryChartCardValue } from '@/api/models/cms/Page'
+import { FigureConfig } from '@/api/requests/charts/getCharts'
 import { getFilteredChartResponseData, getTimespanFromChartData, isTimeseriesChartData } from '@/app/utils/chart.utils'
 import { act, render, screen, waitFor } from '@/config/test-utils'
 
@@ -54,8 +55,20 @@ const { setTimeseriesFilterForTests, setTimeseriesInitialFilterForTests } =
 
 jest.mock('./ChartInteractive', () => ({
   __esModule: true,
-  default: ({ figure, staticChart: _staticChart }: { figure: ChartFigure; staticChart?: React.ReactElement }) => (
-    <div data-testid="chart-interactive">
+  default: ({
+    figure,
+    figureConfig,
+    staticChart: _staticChart,
+  }: {
+    figure: ChartFigure
+    figureConfig: FigureConfig
+    staticChart?: React.ReactElement
+  }) => (
+    <div
+      data-testid="chart-interactive"
+      data-figure={JSON.stringify(figure)}
+      data-figure-config={JSON.stringify(figureConfig)}
+    >
       Chart Interactive - {JSON.stringify(figure.data?.length || 0)} data points
     </div>
   ),
@@ -99,6 +112,11 @@ describe('ChartWithFilter', () => {
   const mockFigure: ChartFigure = {
     data: [{ x: [1, 2, 3], y: [1, 2, 3] }],
     layout: { title: 'Test Chart' },
+  }
+
+  const mockFigureConfig: FigureConfig = {
+    xaxis_full: { nticks: 13 },
+    xaxis_compact: { nticks: 5 },
   }
 
   const mockChart: Chart = [
@@ -171,6 +189,24 @@ describe('ChartWithFilter', () => {
       expect(screen.getByTestId('chart-interactive')).toBeInTheDocument()
 
       expect(mockGetFilteredChartResponseData).not.toHaveBeenCalled()
+    })
+
+    it('passes the initial figure config to the interactive chart', () => {
+      render(
+        <ChartWithFilter
+          figure={mockFigure}
+          figureConfig={mockFigureConfig}
+          title="Test Chart"
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          chartHeight={260}
+        />
+      )
+
+      expect(screen.getByTestId('chart-interactive')).toHaveAttribute(
+        'data-figure-config',
+        JSON.stringify(mockFigureConfig)
+      )
     })
 
     it('renders ChartNoScript with kebabCase title', () => {
@@ -577,10 +613,14 @@ describe('ChartWithFilter', () => {
   })
 
   describe('Successful Fetch', () => {
-    it('updates figure when fetch succeeds', async () => {
+    it('updates figure and figure config when fetch succeeds', async () => {
       const newFigure: ChartFigure = {
         data: [{ x: [4, 5, 6], y: [4, 5, 6] }],
         layout: { title: 'Updated Chart' },
+      }
+      const newFigureConfig: FigureConfig = {
+        xaxis_full: { nticks: 12 },
+        xaxis_compact: { nticks: 4 },
       }
 
       mockGetFilteredChartResponseData.mockResolvedValueOnce({
@@ -590,12 +630,14 @@ describe('ChartWithFilter', () => {
           alt_text: 'Test chart',
           last_updated: '2024-01-01T00:00:00Z',
           figure: newFigure,
+          figure_config: newFigureConfig,
         },
       })
 
       render(
         <ChartWithFilter
           figure={mockFigure}
+          figureConfig={mockFigureConfig}
           title="Test Chart"
           chartData={mockChartData}
           lastUpdated="2025-05-21"
@@ -614,9 +656,50 @@ describe('ChartWithFilter', () => {
         { timeout: 3000 }
       )
 
-      // ChartInteractive should receive the updated figure
-      const chartInteractive = screen.getByTestId('chart-interactive')
-      expect(chartInteractive).toBeInTheDocument()
+      await waitFor(() => {
+        const chartInteractive = screen.getByTestId('chart-interactive')
+        expect(chartInteractive).toHaveAttribute('data-figure', expect.stringContaining('Updated Chart'))
+        expect(chartInteractive).toHaveAttribute('data-figure-config', JSON.stringify(newFigureConfig))
+      })
+    })
+
+    it('retains the current figure config when a filtered response omits it', async () => {
+      const newFigure: ChartFigure = {
+        data: [{ x: [4, 5, 6], y: [4, 5, 6] }],
+        layout: { title: 'Updated Chart' },
+      }
+
+      mockGetFilteredChartResponseData.mockResolvedValueOnce({
+        success: true,
+        data: {
+          chart: 'mock-chart-svg',
+          alt_text: 'Test chart',
+          last_updated: '2024-01-01T00:00:00Z',
+          figure: newFigure,
+        },
+      })
+
+      render(
+        <ChartWithFilter
+          figure={mockFigure}
+          figureConfig={mockFigureConfig}
+          title="Test Chart"
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          chartHeight={260}
+        />
+      )
+
+      await act(async () => {
+        setTimeseriesFilterForTests('6-months')
+      })
+
+      await waitFor(() => {
+        expect(screen.getByTestId('chart-interactive')).toHaveAttribute(
+          'data-figure-config',
+          JSON.stringify(mockFigureConfig)
+        )
+      })
     })
 
     it('passes chart data including axis titles and limits to getFilteredChartResponseData', async () => {

@@ -135,6 +135,7 @@ export async function Chart({
           <ChartWithFilter
             lastUpdated={last_updated}
             figure={{ frames: [], ...figure }}
+            figureConfig={figure_config}
             title={data.title}
             chartData={data}
             isPublic={isPublic}

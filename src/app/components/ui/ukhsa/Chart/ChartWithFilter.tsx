@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { ChartFigure } from '@/api/models/Chart'
 import { ChartComponentData } from '@/api/models/cms/Page'
 import { DataClassification } from '@/api/models/DataClassification'
+import { FigureConfig } from '@/api/requests/charts/getCharts'
 import { TimeseriesFilterProvider, useTimeseriesFilter } from '@/app/hooks/useTimeseriesFilter'
 import { getFilteredChartResponseData, getTimespanFromChartData, isTimeseriesChartData } from '@/app/utils/chart.utils'
 
@@ -18,6 +19,7 @@ import ChartInteractive from './ChartInteractive'
 interface ChartWithFilterProps {
   lastUpdated: string
   figure: ChartFigure
+  figureConfig?: FigureConfig
   chartHeight: number
   title: string
   chartData: ChartComponentData
@@ -35,6 +37,7 @@ const LoadingSpinnerContainer = () => {
 
 const ChartWithFilterContent = ({
   figure,
+  figureConfig,
   chartHeight,
   title,
   chartData,
@@ -43,7 +46,10 @@ const ChartWithFilterContent = ({
   dataClassification = undefined,
 }: ChartWithFilterProps) => {
   const { currentFilter } = useTimeseriesFilter()
-  const [filteredFigure, setFilteredFigure] = useState<ChartFigure>(figure)
+  const [filteredChart, setFilteredChart] = useState<{
+    figure: ChartFigure
+    figureConfig?: FigureConfig
+  }>({ figure, figureConfig })
   const [isLoading, setIsLoading] = useState(false)
   const [hasError, setHasError] = useState(false)
   const previousFilterRef = useRef<string>(currentFilter)
@@ -69,7 +75,10 @@ const ChartWithFilterContent = ({
           return
         }
 
-        setFilteredFigure({ frames: [], ...chartResponse.data.figure })
+        setFilteredChart((currentChart) => ({
+          figure: { frames: [], ...chartResponse.data.figure },
+          figureConfig: chartResponse.data.figure_config ?? currentChart.figureConfig,
+        }))
         setHasError(false)
       } catch (error) {
         console.error('Error fetching filtered chart:', error)
@@ -127,7 +136,8 @@ const ChartWithFilterContent = ({
       ) : (
         <ChartInteractive
           staticChart={<LoadingSpinnerContainer />}
-          figure={{ frames: [], ...filteredFigure }}
+          figure={{ frames: [], ...filteredChart.figure }}
+          figureConfig={filteredChart.figureConfig}
           chartHeight={chartHeight}
         />
       )}
