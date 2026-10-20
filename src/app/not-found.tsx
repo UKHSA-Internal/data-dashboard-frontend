@@ -1,3 +1,4 @@
+import LayoutBlackBanner from './components/ui/ukhsa/Layout/LayoutBlackBanner'
 import NotFound from './components/ui/ukhsa/NotFound/NotFound'
 
 export async function generateMetadata() {
@@ -8,5 +9,9 @@ export async function generateMetadata() {
 }
 
 export default async function NotFoundPage() {
-  return <NotFound />
+  return (
+    <LayoutBlackBanner>
+      <NotFound />
+    </LayoutBlackBanner>
+  )
 }
