@@ -16,14 +16,19 @@ const IDLE_BEFORE_WARNING = (logoutThresholdMinutes - logoutWarningThresholdMinu
 const HALF_IDLE_BEFORE_WARNING = IDLE_BEFORE_WARNING / 2
 
 const mockServerSignOut = jest.fn()
+const mockClearAcknowledgementMarker = jest.fn()
 jest.mock('@/app/api/auth/auth.actions', () => ({
   serverSignOut: (...args: unknown[]) => mockServerSignOut(...args),
+}))
+jest.mock('@/app/utils/acknowledgement.utils', () => ({
+  clearAcknowledgementMarker: () => mockClearAcknowledgementMarker(),
 }))
 
 describe('LogoutWarning', () => {
   beforeEach(() => {
     jest.useFakeTimers()
     mockServerSignOut.mockClear()
+    mockClearAcknowledgementMarker.mockClear()
   })
 
   afterEach(() => {
@@ -113,6 +118,7 @@ describe('LogoutWarning', () => {
 
       expect(mockServerSignOut).toHaveBeenCalledTimes(1)
       expect(mockServerSignOut).toHaveBeenCalledWith('/logged-out')
+      expect(mockClearAcknowledgementMarker).toHaveBeenCalledTimes(1)
     })
 
     test('does not call serverSignOut when Stay signed in is clicked', () => {
@@ -129,6 +135,7 @@ describe('LogoutWarning', () => {
       })
 
       expect(mockServerSignOut).not.toHaveBeenCalled()
+      expect(mockClearAcknowledgementMarker).not.toHaveBeenCalled()
     })
   })
 
@@ -269,6 +276,7 @@ describe('LogoutWarning', () => {
       })
 
       expect(mockServerSignOut).toHaveBeenCalledTimes(1)
+      expect(mockClearAcknowledgementMarker).toHaveBeenCalledTimes(1)
     })
   })
 })
