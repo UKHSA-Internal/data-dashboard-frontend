@@ -115,8 +115,8 @@ describe('ChartWithFilter', () => {
   }
 
   const mockFigureConfig: FigureConfig = {
-    full: { layout: { nticks: 13 } },
-    compact: { layout: { nticks: 5 } },
+    full: { data: [{}], layout: { nticks: 13 } },
+    compact: { data: [{}], layout: { nticks: 5 } },
   }
 
   const mockChart: Chart = [
@@ -620,8 +620,8 @@ describe('ChartWithFilter', () => {
       }
 
       const newFigureConfig: FigureConfig = {
-        full: { layout: { nticks: 13 } },
-        compact: { layout: { nticks: 5 } },
+        full: { data: [{}], layout: { nticks: 13 } },
+        compact: { data: [{}], layout: { nticks: 5 } },
       }
 
       mockGetFilteredChartResponseData.mockResolvedValueOnce({

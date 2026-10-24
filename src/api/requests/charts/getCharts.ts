@@ -54,12 +54,18 @@ export type ChartResponse = z.infer<typeof responseSchema>
 
 export type RequestParams = z.infer<typeof requestSchema>
 
-export const FigureConfigSchema = z
-  .object({
-    full: z.object({}).passthrough(),
-    compact: z.object({}).passthrough(),
-  })
-  .passthrough()
+export const FigureConfigSchema = z.object({
+  full: z
+    .object({
+      data: z.array(z.object({}).passthrough()),
+    })
+    .passthrough(),
+  compact: z
+    .object({
+      data: z.array(z.object({}).passthrough()),
+    })
+    .passthrough(),
+})
 
 export const responseSchema = z.object({
   chart: z.string(),

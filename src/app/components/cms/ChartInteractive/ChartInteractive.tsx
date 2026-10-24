@@ -1,12 +1,13 @@
 'use client'
 
-import { Layout } from 'plotly.js'
+import { Data, Layout } from 'plotly.js'
 import { ReactElement, type RefObject, useMemo, useRef, useState } from 'react'
 import Plot, { Figure } from 'react-plotly.js'
 import { useIntersectionObserver, useResizeObserver } from 'usehooks-ts'
 
 import { FigureConfig } from '@/api/requests/charts/getCharts'
 import { chartSizes } from '@/config/constants'
+import { logger } from '@/lib/logger'
 
 interface ChartInteractiveProps {
   fallbackUntilLoaded: ReactElement
@@ -27,6 +28,19 @@ export default function ChartInteractive({
     ref: chartContainerRef as RefObject<HTMLDivElement>,
   })
   const isCompactChart = chartWidth === undefined || chartWidth < chartSizes.wide.width
+
+  const dyanmicData = useMemo<Data[]>(() => {
+    const dataOverrides = isCompactChart ? figureConfig?.compact.data : figureConfig?.full.data
+
+    if (!dataOverrides || Object.keys(dataOverrides).length === 0) return data
+
+    if (dataOverrides.length !== data.length) {
+      logger.error("Chart rendering error: data overides don't match chart data size")
+      return data
+    }
+
+    return data.map((plot, idx) => ({ ...plot, ...dataOverrides[idx] }) as Data)
+  }, [data, figureConfig, isCompactChart])
 
   const dynamicLayout = useMemo<Partial<Layout>>(() => {
     const layoutOverrides = isCompactChart ? figureConfig?.compact.layout : figureConfig?.full.layout
@@ -50,7 +64,7 @@ export default function ChartInteractive({
         {isIntersecting ? (
           <Plot
             onInitialized={() => setLoaded(true)}
-            data={data}
+            data={dyanmicData}
             layout={dynamicLayout}
             style={{ width: '100%', height: `${chartHeight}px` }}
             config={{

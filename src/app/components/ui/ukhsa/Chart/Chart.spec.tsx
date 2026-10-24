@@ -142,8 +142,8 @@ test('passes figure config to a chart with a timeseries filter', async () => {
   process.env.API_URL = 'http://localhost:8000'
 
   const figureConfig = {
-    full: { layout: { nticks: 13 } },
-    compact: { layout: { nticks: 5 } },
+    full: { data: [{}], layout: { nticks: 13 } },
+    compact: { data: [{}], layout: { nticks: 5 } },
   }
 
   getChartsMock.mockResolvedValueOnce({
