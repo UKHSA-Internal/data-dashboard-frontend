@@ -36,8 +36,8 @@ describe('ChartInteractive', () => {
   } as any
 
   const figure_config = {
-    xaxis_full: { nticks: 10 },
-    xaxis_compact: { nticks: 4 },
+    full: { layout: { xaxis: { nticks: 10 } } },
+    compact: { layout: { xaxis: { nticks: 4 } } },
   } as any
 
   const fallback = <div data-testid="fallback">Loading chart...</div>

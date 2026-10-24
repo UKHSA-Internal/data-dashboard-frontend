@@ -29,17 +29,13 @@ export default function ChartInteractive({
   const isCompactChart = chartWidth === undefined || chartWidth < chartSizes.wide.width
 
   const dynamicLayout = useMemo<Partial<Layout>>(() => {
-    const layoutOverrides = isCompactChart ? figureConfig?.xaxis_compact : figureConfig?.xaxis_full
+    const layoutOverrides = isCompactChart ? figureConfig?.compact.layout : figureConfig?.full.layout
 
     if (!layoutOverrides || Object.keys(layoutOverrides).length === 0) return layout
 
     return {
       ...layout,
-      xaxis: {
-        ...layout.xaxis,
-        ...layoutOverrides,
-      },
-      autosize: true,
+      ...layoutOverrides,
     }
   }, [layout, figureConfig, isCompactChart])
 

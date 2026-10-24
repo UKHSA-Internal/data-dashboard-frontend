@@ -54,12 +54,12 @@ export type ChartResponse = z.infer<typeof responseSchema>
 
 export type RequestParams = z.infer<typeof requestSchema>
 
-const AxisConfigSchema = z.record(z.string(), z.union([z.number().int(), z.string(), z.object({}).passthrough()]))
-
-export const FigureConfigSchema = z.object({
-  xaxis_full: AxisConfigSchema.optional(),
-  xaxis_compact: AxisConfigSchema.optional(),
-})
+export const FigureConfigSchema = z
+  .object({
+    full: z.object({}).passthrough(),
+    compact: z.object({}).passthrough(),
+  })
+  .passthrough()
 
 export const responseSchema = z.object({
   chart: z.string(),
