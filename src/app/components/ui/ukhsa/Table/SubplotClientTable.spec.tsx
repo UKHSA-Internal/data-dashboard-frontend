@@ -146,6 +146,7 @@ const mockDataFilters: any = [
 
 const mockCardData = {
   title_prefix: 'mock card prefix',
+  date_prefix: 'Last updated',
   legend_title: 'mock legend title',
   target_threshold: 95,
   target_threshold_label: undefined,

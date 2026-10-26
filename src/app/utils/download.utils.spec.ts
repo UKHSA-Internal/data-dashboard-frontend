@@ -1,4 +1,4 @@
-import { downloadFile } from './download.utils'
+import { downloadFile, serializeJsonDownload } from './download.utils'
 
 Object.defineProperty(global, 'URL', {
   value: {
@@ -52,4 +52,16 @@ test('Downloading a file via JavaScript', () => {
 
   // Remove the link from the document
   expect(global.document.body.removeChild).toHaveBeenCalledWith(linkMock)
+})
+
+describe('serializeJsonDownload', () => {
+  test('does not serialize an existing JSON string again', () => {
+    const json = '[{"date":"2023-10-30"}]'
+
+    expect(serializeJsonDownload(json)).toBe(json)
+  })
+
+  test('serializes a JSON value once', () => {
+    expect(serializeJsonDownload([{ date: '2023-10-30' }])).toBe('[{"date":"2023-10-30"}]')
+  })
 })

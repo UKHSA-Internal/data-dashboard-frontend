@@ -12,3 +12,5 @@ process.env.AUTH_DOMAIN = 'https://fake-env-domain.auth.eu-west-2.amazoncognito.
 process.env.AUTH_CLIENT_ID = 456
 process.env.AUTH_CLIENT_SECRET = 789
 process.env.AUTH_CLIENT_URL = 'https://cognito-idp.eu-west-2.amazonaws.com/eu-west-2_fake_env'
+process.env.OS_GDN_PROJECT_API_KEY = 'fake-os-project-key'
+process.env.OS_GDN_PROJECT_API_SECRET = 'fake-os-project-secret'

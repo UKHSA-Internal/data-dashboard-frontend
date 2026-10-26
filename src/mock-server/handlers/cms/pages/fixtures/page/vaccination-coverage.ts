@@ -426,6 +426,7 @@ export const vaccinationCoverageMock: PageResponse<PageType.Topic> = {
             type: 'filter_linked_sub_plot_chart_template',
             value: {
               title_prefix: 'Vaccination coverage',
+              date_prefix: 'Last updated',
               legend_title: 'Coverage (%)',
               target_threshold: 95,
               target_threshold_label: '95% target',
@@ -452,6 +453,7 @@ export const vaccinationCoverageMock: PageResponse<PageType.Topic> = {
             type: 'filter_linked_time_series_chart_template',
             value: {
               title_prefix: 'Vaccination coverage by year',
+              date_prefix: 'Last updated',
               legend_title: 'Coverage (%)',
             },
             id: '486629f9-07ce-4f41-a4eb-413c006a8c10',

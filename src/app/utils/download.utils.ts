@@ -13,3 +13,6 @@ export async function downloadFile(name: string, data: Blob) {
   link.click()
   document.body.removeChild(link)
 }
+
+export const serializeJsonDownload = (response: unknown) =>
+  typeof response === 'string' ? response : JSON.stringify(response)

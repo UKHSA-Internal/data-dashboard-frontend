@@ -184,12 +184,12 @@ jobs:
       - name: Create .env.local
         run: |
           cp .env.auth-test .env.local
-          echo "AUTH_SECRET=${AUTH_SECRET}" >> .env.local
-          echo "AUTH_DOMAIN=${AUTH_DOMAIN}" >> .env.local
-          echo "AUTH_CLIENT_ID=${AUTH_CLIENT_ID}" >> .env.local
-          echo "AUTH_CLIENT_SECRET=${AUTH_CLIENT_SECRET}" >> .env.local
-          echo "AUTH_CLIENT_URL=${AUTH_CLIENT_URL}" >> .env.local
-          echo "NEXTAUTH_URL=${NEXTAUTH_URL}" >> .env.local
+          for name in AUTH_SECRET AUTH_DOMAIN AUTH_CLIENT_ID AUTH_CLIENT_SECRET AUTH_CLIENT_URL NEXTAUTH_URL; do
+            value="${!name}"
+            if [[ -n "$value" ]]; then
+              printf '%s=%s\n' "$name" "$value" >> .env.local
+            fi
+          done
           cp .env.local .next/standalone/.env.local
           cp -r .next/static .next/standalone/.next/static
           cp -r public .next/standalone/public

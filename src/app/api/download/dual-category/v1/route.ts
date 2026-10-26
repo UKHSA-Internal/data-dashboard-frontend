@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 import { dualCategoryRequestSchema, getDownloads } from '@/api/requests/downloads/getDownloads'
+import { serializeJsonDownload } from '@/app/utils/download.utils'
 import { logger } from '@/lib/logger'
 
 export async function POST(req: NextRequest) {
   const url = new URL(req.headers.get('origin') || '')
   url.pathname = '/error'
+
+  const authToken = req.headers.get('X-UHD-AUTH')
 
   const body = await req.formData()
 
@@ -20,7 +23,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.redirect(url, 301)
   }
 
-  const response = await getDownloads(params.data)
+  const response = await getDownloads(params.data, authToken)
 
   if (!response) {
     logger.error(`Error while downloading dual category download response: ${response}`)
@@ -36,7 +39,7 @@ export async function POST(req: NextRequest) {
 
   if (params.data.file_format === 'json') {
     logger.info('successful json download')
-    return new NextResponse(JSON.stringify(response), {
+    return new NextResponse(serializeJsonDownload(response), {
       headers: {
         'content-type': 'text/json',
         'content-disposition': 'attachment; filename=ukhsa-chart-download.json',

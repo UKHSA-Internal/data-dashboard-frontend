@@ -84,6 +84,10 @@ export function DownloadForm({
         headers,
       })
 
+      if (!res.ok || res.redirected) {
+        throw new Error('Download request failed')
+      }
+
       const data = await res.text()
 
       if (data) downloadFile(`ukhsa-chart-download.${formData.get('file_format')}`, new Blob([data]))
