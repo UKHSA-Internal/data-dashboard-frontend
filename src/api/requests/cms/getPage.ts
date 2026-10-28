@@ -81,8 +81,8 @@ const WithTopicData = SharedPageData.extend({
   // topic pages can be public or non-public
   is_public: z.boolean(),
   page_classification: DataClassification.or(fallback(undefined)).optional(),
-  page_theme: Theme.or(fallback(undefined)).optional(),
-  page_sub_theme: SubTheme.or(fallback(undefined)).optional(),
+  theme_name: Theme.or(fallback(undefined)).optional(),
+  sub_theme_name: SubTheme.or(fallback(undefined)).optional(),
   meta: Meta.extend({
     type: z.literal('topic.TopicPage'),
   }),
@@ -178,8 +178,8 @@ const WithMetricsChildData = SharedPageData.extend({
   // metrics child pages can be public or non-public
   is_public: z.boolean(),
   page_classification: DataClassification.or(fallback(undefined)).optional(),
-  page_theme: Theme.or(fallback(undefined)).optional(),
-  page_sub_theme: SubTheme.or(fallback(undefined)).optional(),
+  theme_name: Theme.or(fallback(undefined)).optional(),
+  sub_theme_name: SubTheme.or(fallback(undefined)).optional(),
 })
 
 const WithAcknowledgementData = SharedPageData.omit({
