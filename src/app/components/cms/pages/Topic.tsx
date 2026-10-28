@@ -50,8 +50,8 @@ export default async function TopicPage({
     active_announcements: activeAnnouncements,
     is_public: isPublic,
     page_classification: pageClassification,
-    theme_name: theme,
-    sub_theme_name: sub_theme,
+    page_theme: pageTheme,
+    page_sub_theme: pageSubTheme,
   } = await getPageBySlug<PageType.Topic>(slug, { type: PageType.Topic })
   let extractedGlobalFilterContent = {} as ExtractedFilters
   let extractedSubplotData = {} as FilterLinkedSubplotData
@@ -112,8 +112,8 @@ export default async function TopicPage({
                       areaType={areaType}
                       selectedTopics={selectedTopics}
                       isPublic={isPublic}
-                      theme={theme}
-                      sub_theme={sub_theme}
+                      theme={pageTheme}
+                      sub_theme={pageSubTheme}
                     />
                   </Details>
                 </>
@@ -122,8 +122,8 @@ export default async function TopicPage({
               <GlobalFilterProvider
                 filters={extractedGlobalFilterContent}
                 isPublic={isPublic}
-                theme={theme}
-                sub_theme={sub_theme}
+                theme={pageTheme}
+                sub_theme={pageSubTheme}
               >
                 <PageSectionWithContents>
                   {body.map(({ id, value }) =>
