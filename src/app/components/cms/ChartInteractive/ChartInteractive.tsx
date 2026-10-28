@@ -16,6 +16,11 @@ interface ChartInteractiveProps {
   figureConfig?: FigureConfig
 }
 
+type DynamicChartConfig = {
+  data: Data[]
+  layout: Partial<Layout>
+}
+
 export default function ChartInteractive({
   fallbackUntilLoaded,
   figure: { data, layout },
@@ -29,29 +34,26 @@ export default function ChartInteractive({
   })
   const isCompactChart = chartWidth === undefined || chartWidth < chartSizes.wide.width
 
-  const dyanmicData = useMemo<Data[]>(() => {
-    const dataOverrides = isCompactChart ? figureConfig?.compact.data : figureConfig?.full.data
+  const dyanmicChartConfig = useMemo<DynamicChartConfig>(() => {
+    const unModified: DynamicChartConfig = { data, layout }
 
-    if (!dataOverrides || Object.keys(dataOverrides).length === 0) return data
+    if (!figureConfig) return unModified
 
-    if (dataOverrides.length !== data.length) {
+    const { data: dataOverrides = null, layout: layoutOverrides = null } = isCompactChart
+      ? figureConfig.compact
+      : figureConfig.full
+
+    if (!dataOverrides || dataOverrides?.length !== data.length) {
       logger.error("Chart rendering error: data overides don't match chart data size")
-      return data
+      return unModified
     }
-
-    return data.map((plot, idx) => ({ ...plot, ...dataOverrides[idx] }) as Data)
-  }, [data, figureConfig, isCompactChart])
-
-  const dynamicLayout = useMemo<Partial<Layout>>(() => {
-    const layoutOverrides = isCompactChart ? figureConfig?.compact.layout : figureConfig?.full.layout
-
-    if (!layoutOverrides || Object.keys(layoutOverrides).length === 0) return layout
 
     return {
-      ...layout,
-      ...layoutOverrides,
+      data: data.map((plot, idx) => ({ ...plot, ...dataOverrides[idx] }) as Data),
+      layout:
+        layoutOverrides && Object.keys(layoutOverrides).length > 0 ? { ...layout, ...layoutOverrides } : { ...layout },
     }
-  }, [layout, figureConfig, isCompactChart])
+  }, [data, layout, figureConfig, isCompactChart])
 
   const { isIntersecting, ref } = useIntersectionObserver({
     freezeOnceVisible: true,
@@ -64,8 +66,8 @@ export default function ChartInteractive({
         {isIntersecting ? (
           <Plot
             onInitialized={() => setLoaded(true)}
-            data={dyanmicData}
-            layout={dynamicLayout}
+            data={dyanmicChartConfig.data}
+            layout={dyanmicChartConfig.layout}
             style={{ width: '100%', height: `${chartHeight}px` }}
             config={{
               displayModeBar: false,
