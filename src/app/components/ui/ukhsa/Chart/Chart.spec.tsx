@@ -144,6 +144,7 @@ test('passes figure config to a chart with a timeseries filter', async () => {
   const figureConfig = {
     full: { data: [{}], layout: { nticks: 13 } },
     compact: { data: [{}], layout: { nticks: 5 } },
+    compact_rotated: { data: [{}], layout: { nticks: 5 } },
   }
 
   getChartsMock.mockResolvedValueOnce({

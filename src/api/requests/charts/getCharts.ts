@@ -54,15 +54,29 @@ export type ChartResponse = z.infer<typeof responseSchema>
 
 export type RequestParams = z.infer<typeof requestSchema>
 
+const FigureLayoutSchema = z
+  .object({
+    height: z.number().positive().optional(),
+  })
+  .passthrough()
+
 export const FigureConfigSchema = z.object({
   full: z
     .object({
       data: z.array(z.object({}).passthrough()),
+      layout: FigureLayoutSchema,
     })
     .passthrough(),
   compact: z
     .object({
       data: z.array(z.object({}).passthrough()),
+      layout: FigureLayoutSchema,
+    })
+    .passthrough(),
+  compact_rotated: z
+    .object({
+      data: z.array(z.object({}).passthrough()),
+      layout: FigureLayoutSchema,
     })
     .passthrough(),
 })

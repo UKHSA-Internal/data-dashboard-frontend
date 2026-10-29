@@ -1,4 +1,4 @@
-import { useIntersectionObserver, useResizeObserver } from 'usehooks-ts'
+import { useIntersectionObserver, useResizeObserver, useWindowSize } from 'usehooks-ts'
 
 import { fireEvent, render, screen } from '@/config/test-utils'
 import { logger } from '@/lib/logger'
@@ -22,13 +22,17 @@ jest.mock('react-plotly.js', () => ({
 jest.mock('usehooks-ts', () => ({
   useIntersectionObserver: jest.fn(),
   useResizeObserver: jest.fn(),
+  useWindowSize: jest.fn(),
 }))
 
 const mockUseIntersectionObserver = useIntersectionObserver as jest.Mock
 const mockUseResizeObserver = useResizeObserver as jest.Mock
+const mockUseWindowSize = useWindowSize as jest.Mock
 
 const COMPACT_WIDTH = 514
 const FULL_WIDTH = 1100
+const SINGLE_COLUMN_WIDTH = 1023
+const TWO_COLUMN_WIDTH = 1024
 
 describe('ChartInteractive', () => {
   const figure = {
@@ -74,6 +78,23 @@ describe('ChartInteractive', () => {
       ],
       layout: { xaxis: { nticks: 4 } },
     },
+    compact_rotated: {
+      data: [
+        {
+          x: [9, 10],
+          y: [11, 12],
+          hovertemplate: 'Compact rotated: %{y} (%{x|%d %b %Y})',
+          orientation: 'h',
+        },
+        {
+          x: [13, 14],
+          y: [15, 16],
+          hovertemplate: 'Compact rotated: %{y} (%{x|%d %b %Y})',
+          orientation: 'h',
+        },
+      ],
+      layout: { xaxis: { nticks: 2 }, height: 400 },
+    },
   } as any
 
   const fallback = <div data-testid="fallback">Loading chart...</div>
@@ -82,6 +103,7 @@ describe('ChartInteractive', () => {
     jest.clearAllMocks()
     mockUseIntersectionObserver.mockReturnValue({ isIntersecting: true, ref: jest.fn() })
     mockUseResizeObserver.mockRejectedValue({ width: FULL_WIDTH, height: 260 })
+    mockUseWindowSize.mockReturnValue({ width: 1440, height: 900 })
   })
 
   test('renders only the fallback when the chart is not in view', () => {
@@ -118,6 +140,37 @@ describe('ChartInteractive', () => {
     )
   })
 
+  test('uses the compact height supplied by the backend', () => {
+    const fixedHeightFigureConfig = {
+      ...figure_config,
+      compact_rotated: {
+        ...figure_config.compact_rotated,
+        layout: {
+          ...figure_config.compact_rotated.layout,
+          height: 400,
+        },
+      },
+    }
+    mockUseResizeObserver.mockReturnValue({ width: 400, height: 260 })
+    mockUseWindowSize.mockReturnValue({ width: SINGLE_COLUMN_WIDTH, height: 900 })
+
+    render(
+      <ChartInteractive
+        fallbackUntilLoaded={fallback}
+        figure={figure}
+        figureConfig={fixedHeightFigureConfig}
+        chartHeight={260}
+      />
+    )
+
+    expect(mockPlot).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        layout: expect.objectContaining({ height: 400 }),
+        style: { width: '100%', height: '400px' },
+      })
+    )
+  })
+
   test.each([
     { size: 'full', width: FULL_WIDTH, expected: { xaxis: { nticks: 10 } } },
     { size: 'compact', width: COMPACT_WIDTH, expected: { xaxis: { nticks: 4 } } },
@@ -132,7 +185,7 @@ describe('ChartInteractive', () => {
   })
 
   test('uses compact settings for a two-column chart on a wide screen', () => {
-    window.innerWidth = 1440
+    mockUseWindowSize.mockReturnValue({ width: 1440, height: 900 })
     mockUseResizeObserver.mockReturnValue({ width: COMPACT_WIDTH, height: 260 })
 
     render(
@@ -141,6 +194,35 @@ describe('ChartInteractive', () => {
 
     expect(mockPlot).toHaveBeenLastCalledWith(
       expect.objectContaining({ layout: expect.objectContaining({ ...figure.layout, xaxis: { nticks: 4 } }) })
+    )
+  })
+
+  test('uses compact rotated settings below the single-column layout boundary', () => {
+    mockUseWindowSize.mockReturnValue({ width: SINGLE_COLUMN_WIDTH, height: 900 })
+    mockUseResizeObserver.mockReturnValue({ width: COMPACT_WIDTH, height: 260 })
+
+    render(
+      <ChartInteractive fallbackUntilLoaded={fallback} figure={figure} figureConfig={figure_config} chartHeight={260} />
+    )
+
+    expect(mockPlot).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        data: expect.arrayContaining([expect.objectContaining({ orientation: 'h', x: [9, 10], y: [11, 12] })]),
+        layout: expect.objectContaining({ xaxis: { nticks: 2 }, height: 400 }),
+      })
+    )
+  })
+
+  test('uses compact settings at the two-column layout boundary', () => {
+    mockUseWindowSize.mockReturnValue({ width: TWO_COLUMN_WIDTH, height: 900 })
+    mockUseResizeObserver.mockReturnValue({ width: COMPACT_WIDTH, height: 260 })
+
+    render(
+      <ChartInteractive fallbackUntilLoaded={fallback} figure={figure} figureConfig={figure_config} chartHeight={260} />
+    )
+
+    expect(mockPlot).toHaveBeenLastCalledWith(
+      expect.objectContaining({ layout: expect.objectContaining({ xaxis: { nticks: 4 } }) })
     )
   })
 

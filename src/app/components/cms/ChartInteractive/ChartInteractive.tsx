@@ -3,10 +3,10 @@
 import { Data, Layout } from 'plotly.js'
 import { ReactElement, type RefObject, useMemo, useRef, useState } from 'react'
 import Plot, { Figure } from 'react-plotly.js'
-import { useIntersectionObserver, useResizeObserver } from 'usehooks-ts'
+import { useIntersectionObserver, useResizeObserver, useWindowSize } from 'usehooks-ts'
 
 import { FigureConfig } from '@/api/requests/charts/getCharts'
-import { chartSizes } from '@/config/constants'
+import { chartSizes, singleColumnLayoutBreakpoint } from '@/config/constants'
 import { logger } from '@/lib/logger'
 
 interface ChartInteractiveProps {
@@ -19,6 +19,7 @@ interface ChartInteractiveProps {
 type DynamicChartConfig = {
   data: Data[]
   layout: Partial<Layout>
+  height: number
 }
 
 export default function ChartInteractive({
@@ -32,28 +33,38 @@ export default function ChartInteractive({
   const { width: chartWidth } = useResizeObserver<HTMLDivElement>({
     ref: chartContainerRef as RefObject<HTMLDivElement>,
   })
+  const { width: viewportWidth } = useWindowSize()
   const isCompactChart = chartWidth === undefined || chartWidth < chartSizes.wide.width
+  const isCompactRotatedChart = viewportWidth > 0 && viewportWidth < singleColumnLayoutBreakpoint
 
   const dyanmicChartConfig = useMemo<DynamicChartConfig>(() => {
-    const unModified: DynamicChartConfig = { data, layout }
+    const unModified: DynamicChartConfig = { data, layout, height: chartHeight }
 
     if (!figureConfig) return unModified
 
-    const { data: dataOverrides = null, layout: layoutOverrides = null } = isCompactChart
-      ? figureConfig.compact
-      : figureConfig.full
+    const { data: dataOverrides = null, layout: layoutOverrides = null } = isCompactRotatedChart
+      ? figureConfig.compact_rotated
+      : isCompactChart
+        ? figureConfig.compact
+        : figureConfig.full
 
     if (!dataOverrides || dataOverrides?.length !== data.length) {
       logger.error("Chart rendering error: data overides don't match chart data size")
       return unModified
     }
 
+    const compactHeight = layoutOverrides?.height
+    const responsiveHeight =
+      isCompactChart && typeof compactHeight === 'number' && compactHeight > 0 ? compactHeight : chartHeight
+    const mergedLayout: Partial<Layout> =
+      layoutOverrides && Object.keys(layoutOverrides).length > 0 ? { ...layout, ...layoutOverrides } : { ...layout }
+
     return {
       data: data.map((plot, idx) => ({ ...plot, ...dataOverrides[idx] }) as Data),
-      layout:
-        layoutOverrides && Object.keys(layoutOverrides).length > 0 ? { ...layout, ...layoutOverrides } : { ...layout },
+      layout: mergedLayout,
+      height: responsiveHeight,
     }
-  }, [data, layout, figureConfig, isCompactChart])
+  }, [chartHeight, data, layout, figureConfig, isCompactChart, isCompactRotatedChart])
 
   const { isIntersecting, ref } = useIntersectionObserver({
     freezeOnceVisible: true,
@@ -68,7 +79,7 @@ export default function ChartInteractive({
             onInitialized={() => setLoaded(true)}
             data={dyanmicChartConfig.data}
             layout={dyanmicChartConfig.layout}
-            style={{ width: '100%', height: `${chartHeight}px` }}
+            style={{ width: '100%', height: `${dyanmicChartConfig.height}px` }}
             config={{
               displayModeBar: false,
               scrollZoom: false,
