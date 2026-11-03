@@ -174,14 +174,25 @@ const SubplotClientChart = ({
   }
 
   if (chartResponse) {
-    const { figure } = chartResponse
+    // const { figure } = chartResponse
+    const { figure, figure_config } = chartResponse
+    const rotatedMode = figure_config?.compact_rotated
+    const rotatedFigureConfig = rotatedMode
+      ? {
+          full: rotatedMode,
+          compact: rotatedMode,
+          compact_rotated: rotatedMode,
+        }
+      : undefined
 
     return (
       <>
         <ChartInteractiveWrapper
           fallbackUntilLoaded={<h2>loading</h2>}
           figure={{ frames: [], ...figure }}
-          chartHeight={chartSizes.narrow.height}
+          figureConfig={rotatedFigureConfig}
+          // chartHeight={chartSizes.narrow.height}
+          chartHeight={rotatedMode?.layout.height ?? chartSizes.narrow.height}
         />
         <TimePeriodSelector
           timePeriods={timePeriods}
