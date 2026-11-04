@@ -14,7 +14,21 @@ export class NotFoundPage {
   }
 
   async hasPageContent() {
-    await expect(this.page.getByRole('heading', { level: 1, name: 'Page not found' })).toBeVisible()
+    await expect(
+      this.page.getByRole('heading', {
+        level: 1,
+        name: 'Page not found',
+      })
+    ).toBeVisible()
+
+    // Check that exactly one site header is rendered.
+    const header = this.page.locator('header.govuk-header')
+    await expect(header).toHaveCount(1)
+    await expect(header).toBeVisible()
+
+    // Check that there is one document title with the correct 404 text.
+    await expect(this.page.locator('head > title')).toHaveCount(1)
+    await expect(this.page).toHaveTitle('Page Not Found | UKHSA Data Dashboard')
   }
 
   async clickReturnToHome() {
