@@ -1,12 +1,14 @@
 import { z } from 'zod'
 
 import { Geography, GeographyType, Metrics, SubTheme, Theme, Topics } from '@/api/models'
-import { ChartFigure, ChartLineColours, ChartTypes } from '@/api/models/Chart'
+import { ChartLineColours, ChartTypes } from '@/api/models/Chart'
 import { DataClassification } from '@/api/models/DataClassification'
 import { client } from '@/api/utils/api.utils'
 import { isSSR } from '@/app/utils/app.utils'
 import { chartFormat } from '@/config/constants'
 import { logger } from '@/lib/logger'
+
+import { responseSchema } from './getCharts'
 
 const staticFieldsSchema = z.object({
   theme: Theme,
@@ -45,13 +47,6 @@ export const requestSchema = z.object({
       label: z.string().nullable().optional(),
     })
   ),
-})
-
-export const responseSchema = z.object({
-  chart: z.string(),
-  last_updated: z.string(),
-  alt_text: z.string(),
-  figure: ChartFigure,
 })
 
 export type ChartResponse = z.infer<typeof responseSchema>

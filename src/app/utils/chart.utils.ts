@@ -285,6 +285,9 @@ export const getFilteredChartResponseData = async (
   return getSingleCategoryChartsResponseData(plots, data, filterNarrowSize, isPublic, dataClassification)
 }
 
+export const getSelectedChartSize = (sizes: ChartSizes) =>
+  sizes.slice().sort((a, b) => chartSizes[b.size].width - chartSizes[a.size].width)[0]
+
 // Chooses the correct function to get the data based on the chart type
 export const getChartResponseData = async (
   data: ChartComponentData,
@@ -295,7 +298,7 @@ export const getChartResponseData = async (
   dataClassification?: DataClassification
 ) => {
   // Select the default size (mobile-first approach)
-  const selectedSize = sizes.slice().sort((a, b) => chartSizes[b.size].width - chartSizes[a.size].width)[0]
+  const selectedSize = getSelectedChartSize(sizes)
 
   // If the chart is a dual category chart, get the data and return early
   if (isDualCategoryChartCardValue(data)) {
