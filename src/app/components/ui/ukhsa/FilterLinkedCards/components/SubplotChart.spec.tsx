@@ -84,6 +84,7 @@ jest.mock('@/app/components/ui/ukhsa/TimePeriodSelector/TimePeriodSelector', () 
 
 const mockCardData: FilterLinkedSubplotData = {
   title_prefix: 'Coverage',
+  date_prefix: 'Last updated',
   legend_title: 'Coverage %',
   target_threshold: 95,
   target_threshold_label: 'Target',

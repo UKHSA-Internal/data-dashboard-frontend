@@ -49,7 +49,7 @@ export default async function WeatherHealthAlerts() {
   }
   const allowedTypes = ['heat', 'cold'] as const
   type AllowedType = (typeof allowedTypes)[number]
-  const buttonType = weatherType?.value.button_type
+  const buttonType = weatherType?.value.button_type.toLowerCase()
   const type: AllowedType = allowedTypes.includes(buttonType as AllowedType) ? (buttonType as AllowedType) : 'heat'
   const buttonText = weatherType?.value.text || ''
 

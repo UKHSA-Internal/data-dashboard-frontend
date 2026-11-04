@@ -94,6 +94,7 @@ export async function Table({
     body,
     confidence_intervals,
     confidence_intervals_description,
+    date_prefix,
   },
   size,
   isPublic = true,
@@ -151,7 +152,12 @@ export async function Table({
       <table className="govuk-table govuk-!-margin-bottom-0 table-fixed border-separate border-spacing-0">
         <caption className="govuk-table__caption govuk-table__caption--s govuk-!-margin-bottom-2 font-normal">
           <RichText className="govuk-!-margin-bottom-2">{t('cms.blocks.table.caption', { title, body })}</RichText>
-          <p className="govuk-!-margin-0">{t('cms.blocks.table.timestamp', { timestamp })}</p>
+          <p className="govuk-!-margin-0" data-testid="table-date-prefix">
+            {t('cms.blocks.table.timestamp.value', {
+              prefix: date_prefix,
+              value: timestamp,
+            })}
+          </p>
           {confidence_intervals === true && confidence_intervals_description && (
             <p className="govuk-!-margin-0 govuk-!-margin-top-2 font-bold">{confidence_intervals_description}</p>
           )}

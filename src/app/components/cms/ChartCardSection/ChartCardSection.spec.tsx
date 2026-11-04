@@ -200,6 +200,36 @@ describe('ChartCardSection', () => {
     expect(screen.queryByText('Show More')).not.toBeInTheDocument()
   })
 
+  test('renders chart card section with headline_chart_with_description_card type', async () => {
+    const mockValue = {
+      cards: [
+        {
+          ...createMockChartWithDescriptionCard('headline-card-1', 'Headline Chart 1', 'Headline subtitle 1', {
+            description: 'Some headline chart description',
+          }),
+          type: 'headline_chart_with_description_card',
+        },
+      ],
+    }
+
+    const mockProps = {
+      value: mockValue,
+      heading: 'Headline Section',
+      showMoreSections: [],
+    }
+
+    render(
+      <Suspense fallback={<div>Loading...</div>}>
+        <ChartCardSection {...mockProps} />
+      </Suspense>
+    )
+
+    expect(await screen.findByRole('heading', { name: 'Headline Chart 1', level: 3 })).toBeInTheDocument()
+    expect(screen.getByText('Headline subtitle 1')).toBeInTheDocument()
+    expect(screen.getByText('Some headline chart description')).toBeInTheDocument()
+    expect(screen.getAllByTestId('card-wrapper')).toHaveLength(1)
+  })
+
   test('renders chart card section with chart_with_description_card type', async () => {
     const mockValue = {
       cards: [

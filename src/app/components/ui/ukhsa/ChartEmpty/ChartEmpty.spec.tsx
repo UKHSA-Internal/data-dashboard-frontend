@@ -19,4 +19,11 @@ describe('ChartEmpty', () => {
     expect(resetLinkElement).toBeInTheDocument()
     expect(resetLinkElement).toHaveAttribute('href', resetHref)
   })
+
+  test('hides the reset link when showResetLink is false', () => {
+    render(<ChartEmpty resetHref={resetHref} showResetLink={false} />)
+
+    expect(screen.getByText('No data available')).toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Reset' })).not.toBeInTheDocument()
+  })
 })

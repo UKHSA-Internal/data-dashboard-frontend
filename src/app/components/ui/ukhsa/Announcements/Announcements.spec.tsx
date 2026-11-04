@@ -31,6 +31,7 @@ test('renders multiple announcements when provided', async () => {
     },
   ]
 
+  // eslint-disable-next-line tailwindcss/no-custom-classname
   const { getByText, getAllByRole } = render(<Announcements announcements={announcementsData} className="test-class" />)
 
   // Should render both announcements

@@ -20,12 +20,23 @@ import {
 } from './getPages'
 
 type SuccessResponse = z.SafeParseSuccess<z.infer<typeof responseSchema>>
+type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
 type WhatsNewSuccessResponse = z.SafeParseSuccess<z.infer<typeof whatsNewResponseSchema>>
+type WhatsNewErrorResponse = z.SafeParseError<z.infer<typeof whatsNewResponseSchema>>
+
+let mockIsSSR = false
+jest.mock('@/app/utils/app.utils', () => ({
+  ...jest.requireActual('@/app/utils/app.utils'),
+  get isSSR() {
+    return mockIsSSR
+  },
+}))
 
 const getPagesResponse = jest.mocked(client)
 
 beforeEach(() => {
   jest.clearAllMocks()
+  mockIsSSR = false
 })
 
 describe('Successfully getting all pages from the cms api ', () => {
@@ -55,11 +66,7 @@ describe('getPages', () => {
 
     const result = await getPages({ type: PageType.Common })
 
-    expect(result.success).toBe(false)
-    if (result.success) {
-      throw new Error('Expected error result')
-    }
-    expect(result.error.issues).toEqual([
+    expect((result as ErrorResponse).error.issues).toEqual([
       {
         code: 'invalid_type',
         expected: 'array',
@@ -88,15 +95,13 @@ describe('getPages', () => {
 
     expect(result.success).toBe(true)
 
-    if (!result.success) {
-      throw new Error('Expected successful parse result')
-    }
+    const { data } = result as SuccessResponse
 
-    expect(result.data.meta).toEqual({
+    expect(data.meta).toEqual({
       total_count: allPagesMock.items.length,
     })
-    expect(result.data.items).toHaveLength(allPagesMock.items.length)
-    expect(result.data.items).toEqual(
+    expect(data.items).toHaveLength(allPagesMock.items.length)
+    expect(data.items).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           id: expect.any(Number),
@@ -166,13 +171,37 @@ describe('getPages', () => {
 
     expect(result.success).toBe(true)
 
-    if (!result.success) {
-      throw new Error('Expected successful parse result')
-    }
+    const { data } = result as SuccessResponse
 
-    expect(result.data.items).toHaveLength(totalItems)
-    expect(result.data.meta.total_count).toBe(totalItems)
+    expect(data.items).toHaveLength(totalItems)
+    expect(data.meta.total_count).toBe(totalItems)
     expect(getPagesResponse).toHaveBeenCalledTimes(3)
+  })
+
+  test('requests the proxy path when not server-side rendered', async () => {
+    mockIsSSR = false
+
+    getPagesResponse.mockResolvedValueOnce({
+      status: 200,
+      data: allPagesMock,
+    })
+
+    await getPages()
+
+    expect(getPagesResponse).toHaveBeenCalledWith('proxy/pages', expect.anything())
+  })
+
+  test('requests the pages path when server-side rendered', async () => {
+    mockIsSSR = true
+
+    getPagesResponse.mockResolvedValueOnce({
+      status: 200,
+      data: allPagesMock,
+    })
+
+    await getPages()
+
+    expect(getPagesResponse).toHaveBeenCalledWith('pages', expect.anything())
   })
 
   test('includes additional params in initial request', async () => {
@@ -290,11 +319,7 @@ describe("Failing to get all What's new child pages from the cms api", () => {
 
     const response = await getWhatsNewPages({ page: 1 })
 
-    expect(response.success).toBe(false)
-    if (response.success) {
-      throw new Error('Expected error result')
-    }
-    expect(response.error.issues).toEqual([
+    expect((response as WhatsNewErrorResponse).error.issues).toEqual([
       {
         code: 'invalid_type',
         expected: 'array',
@@ -313,11 +338,7 @@ describe("Failing to get all What's new child pages from the cms api", () => {
 
     const result = await getWhatsNewPages({ page: 1 })
 
-    expect(result.success).toBe(false)
-    if (result.success) {
-      throw new Error('Expected error result')
-    }
-    expect(result.error.issues).toEqual([
+    expect((result as WhatsNewErrorResponse).error.issues).toEqual([
       {
         code: 'invalid_type',
         expected: 'array',
@@ -359,6 +380,19 @@ describe("Failing to get all What's new child pages from the cms api", () => {
     const callArgs = getPagesResponse.mock.calls[0]
     const searchParams = callArgs[1]?.searchParams as URLSearchParams
     expect(searchParams.get('limit')).toBe('20')
+  })
+
+  test('defaults to the first page when page is undefined', async () => {
+    getPagesResponse.mockResolvedValueOnce({
+      status: 200,
+      data: pagesWithWhatsNewChildTypeMock,
+    })
+
+    await getWhatsNewPages({ page: undefined })
+
+    const callArgs = getPagesResponse.mock.calls[0]
+    const searchParams = callArgs[1]?.searchParams as URLSearchParams
+    expect(searchParams.get('offset')).toBe('0')
   })
 })
 
@@ -443,6 +477,19 @@ describe('Successfully getting all Metrics Documentation child pages from the cm
     const searchParams = callArgs[1]?.searchParams as URLSearchParams
     expect(searchParams.get('limit')).toBe('25')
   })
+
+  test('defaults to the first page when page is undefined', async () => {
+    getPagesResponse.mockResolvedValueOnce({
+      status: 200,
+      data: pagesWithMetricsChildTypeMock,
+    })
+
+    await getMetricsPages({ search: undefined, page: undefined as unknown as number })
+
+    const callArgs = getPagesResponse.mock.calls[0]
+    const searchParams = callArgs[1]?.searchParams as URLSearchParams
+    expect(searchParams.get('offset')).toBe('0')
+  })
 })
 
 describe('Failing to get all Metrics Documentation pages from the cms api', () => {
@@ -459,11 +506,7 @@ describe('Failing to get all Metrics Documentation pages from the cms api', () =
 
     const response = await getMetricsPages({ search: undefined, page: 1 })
 
-    expect(response!.success).toBe(false)
-    if (response!.success) {
-      throw new Error('Expected error result')
-    }
-    expect(response!.error!.issues).toEqual([
+    expect((response as ErrorResponse).error.issues).toEqual([
       {
         code: 'invalid_type',
         expected: 'array',
@@ -482,11 +525,7 @@ describe('Failing to get all Metrics Documentation pages from the cms api', () =
 
     const result = await getMetricsPages({ search: undefined, page: 1 })
 
-    expect(result!.success).toBe(false)
-    if (result!.success) {
-      throw new Error('Expected error result')
-    }
-    expect(result!.error.issues).toEqual([
+    expect((result as ErrorResponse).error.issues).toEqual([
       {
         code: 'invalid_type',
         expected: 'array',
@@ -529,11 +568,8 @@ describe('Failing to get all Metrics Documentation pages from the cms api', () =
     const result = await getPages()
 
     expect(result.success).toBe(true)
-    if (!result.success) {
-      throw new Error('Expected successful parse result')
-    }
     // Should still return items from successful requests
-    expect(result.data.items.length).toBeGreaterThan(0)
+    expect((result as SuccessResponse).data.items.length).toBeGreaterThan(0)
   })
 
   test('handles validation errors in paginated requests', async () => {
@@ -559,10 +595,7 @@ describe('Failing to get all Metrics Documentation pages from the cms api', () =
     const result = await getPages()
 
     expect(result.success).toBe(true)
-    if (!result.success) {
-      throw new Error('Expected successful parse result')
-    }
     // Should only include items from valid responses
-    expect(result.data.items.length).toBe(50)
+    expect((result as SuccessResponse).data.items).toHaveLength(50)
   })
 })

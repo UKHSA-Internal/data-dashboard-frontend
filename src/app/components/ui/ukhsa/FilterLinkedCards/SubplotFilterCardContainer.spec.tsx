@@ -52,11 +52,42 @@ const mockSelectedGeographies: GeographiesSchemaObject[] = [
 
 const mockCoverageTemplateData = {
   title_prefix: 'Coverage',
+  date_prefix: 'Last updated',
   legend_title: 'Coverage %',
   target_threshold: 95,
   target_threshold_label: 'Target',
   about: 'About coverage data',
 }
+
+type GlobalFiltersState = ReturnType<typeof useGlobalFilters>['state']
+
+// Base state shared by every test, only pass the fields a given test cares about.
+const createMockGlobalFiltersState = (overrides: Partial<GlobalFiltersState> = {}) => ({
+  state: {
+    timePeriods: mockTimePeriods,
+    geographyFilters: mockGeographyFilters,
+    thresholdFilters: { label: 'Thresholds', thresholds: mockSelectedThresholds },
+    dataFilters: { data_filters: mockSelectedVaccinations, label: 'Vaccinations', categories_to_group_by: [] },
+    coverageTemplateData: mockCoverageTemplateData,
+    timeseriesTemplateData: { title_prefix: 'Timeseries', date_prefix: 'Last updated', legend_title: 'Legend' },
+    timePeriodTitle: 'Year selection',
+    chartRequestErrors: [],
+    selectedVaccinationFilters: mockSelectedVaccinations,
+    selectedGeographyFilters: mockSelectedGeographies,
+    selectedThresholdFilters: mockSelectedThresholds,
+    selectedTimePeriod: null,
+    selectedFilters: [],
+    geographyAreas: new Map(),
+    geographyAreasLoading: false,
+    geographyAreasError: null,
+    selectedVaccination: null,
+    mapData: null,
+    mapDataLoading: false,
+    mapDataError: null,
+    ...overrides,
+  },
+  actions: {} as any,
+})
 
 describe('SubplotFilterCardContainer', () => {
   beforeEach(() => {
@@ -65,31 +96,7 @@ describe('SubplotFilterCardContainer', () => {
   })
 
   test('renders SubplotFilterCard when data is available', () => {
-    mockUseGlobalFilters.mockReturnValue({
-      state: {
-        timePeriods: mockTimePeriods,
-        geographyFilters: mockGeographyFilters,
-        thresholdFilters: { label: 'Thresholds', thresholds: mockSelectedThresholds },
-        dataFilters: { data_filters: mockSelectedVaccinations, label: 'Vaccinations', categories_to_group_by: [] },
-        coverageTemplateData: mockCoverageTemplateData,
-        timeseriesTemplateData: { title_prefix: 'Timeseries', legend_title: 'Legend' },
-        timePeriodTitle: 'Year selection',
-        chartRequestErrors: [],
-        selectedVaccinationFilters: mockSelectedVaccinations,
-        selectedGeographyFilters: mockSelectedGeographies,
-        selectedThresholdFilters: mockSelectedThresholds,
-        selectedTimePeriod: null,
-        selectedFilters: [],
-        geographyAreas: new Map(),
-        geographyAreasLoading: false,
-        geographyAreasError: null,
-        selectedVaccination: null,
-        mapData: null,
-        mapDataLoading: false,
-        mapDataError: null,
-      },
-      actions: {} as any,
-    })
+    mockUseGlobalFilters.mockReturnValue(createMockGlobalFiltersState())
 
     render(<SubplotFilterCardContainer />)
 
@@ -100,31 +107,7 @@ describe('SubplotFilterCardContainer', () => {
   })
 
   test('renders info message when no geography filters selected', () => {
-    mockUseGlobalFilters.mockReturnValue({
-      state: {
-        timePeriods: mockTimePeriods,
-        geographyFilters: mockGeographyFilters,
-        thresholdFilters: { label: 'Thresholds', thresholds: mockSelectedThresholds },
-        dataFilters: { data_filters: mockSelectedVaccinations, label: 'Vaccinations', categories_to_group_by: [] },
-        coverageTemplateData: mockCoverageTemplateData,
-        timeseriesTemplateData: { title_prefix: 'Timeseries', legend_title: 'Legend' },
-        timePeriodTitle: 'Year selection',
-        chartRequestErrors: [],
-        selectedVaccinationFilters: mockSelectedVaccinations,
-        selectedGeographyFilters: [],
-        selectedThresholdFilters: mockSelectedThresholds,
-        selectedTimePeriod: null,
-        selectedFilters: [],
-        geographyAreas: new Map(),
-        geographyAreasLoading: false,
-        geographyAreasError: null,
-        selectedVaccination: null,
-        mapData: null,
-        mapDataLoading: false,
-        mapDataError: null,
-      },
-      actions: {} as any,
-    })
+    mockUseGlobalFilters.mockReturnValue(createMockGlobalFiltersState({ selectedGeographyFilters: [] }))
 
     render(<SubplotFilterCardContainer />)
 
@@ -136,31 +119,12 @@ describe('SubplotFilterCardContainer', () => {
   })
 
   test('renders info message when no vaccination filters selected', () => {
-    mockUseGlobalFilters.mockReturnValue({
-      state: {
-        timePeriods: mockTimePeriods,
-        geographyFilters: mockGeographyFilters,
-        thresholdFilters: { label: 'Thresholds', thresholds: mockSelectedThresholds },
-        dataFilters: { data_filters: [], label: 'Vaccinations', categories_to_group_by: [] },
-        coverageTemplateData: mockCoverageTemplateData,
-        timeseriesTemplateData: { title_prefix: 'Timeseries', legend_title: 'Legend' },
-        timePeriodTitle: 'Year selection',
-        chartRequestErrors: [],
+    mockUseGlobalFilters.mockReturnValue(
+      createMockGlobalFiltersState({
         selectedVaccinationFilters: [],
-        selectedGeographyFilters: mockSelectedGeographies,
-        selectedThresholdFilters: mockSelectedThresholds,
-        selectedTimePeriod: null,
-        selectedFilters: [],
-        geographyAreas: new Map(),
-        geographyAreasLoading: false,
-        geographyAreasError: null,
-        selectedVaccination: null,
-        mapData: null,
-        mapDataLoading: false,
-        mapDataError: null,
-      },
-      actions: {} as any,
-    })
+        dataFilters: { data_filters: [], label: 'Vaccinations', categories_to_group_by: [] },
+      })
+    )
 
     render(<SubplotFilterCardContainer />)
 
@@ -169,31 +133,13 @@ describe('SubplotFilterCardContainer', () => {
   })
 
   test('renders info message when both filters are empty', () => {
-    mockUseGlobalFilters.mockReturnValue({
-      state: {
-        timePeriods: mockTimePeriods,
-        geographyFilters: mockGeographyFilters,
-        thresholdFilters: { label: 'Thresholds', thresholds: mockSelectedThresholds },
-        dataFilters: { data_filters: [], label: 'Vaccinations', categories_to_group_by: [] },
-        coverageTemplateData: mockCoverageTemplateData,
-        timeseriesTemplateData: { title_prefix: 'Timeseries', legend_title: 'Legend' },
-        timePeriodTitle: 'Year selection',
-        chartRequestErrors: [],
-        selectedVaccinationFilters: [],
+    mockUseGlobalFilters.mockReturnValue(
+      createMockGlobalFiltersState({
         selectedGeographyFilters: [],
-        selectedThresholdFilters: mockSelectedThresholds,
-        selectedTimePeriod: null,
-        selectedFilters: [],
-        geographyAreas: new Map(),
-        geographyAreasLoading: false,
-        geographyAreasError: null,
-        selectedVaccination: null,
-        mapData: null,
-        mapDataLoading: false,
-        mapDataError: null,
-      },
-      actions: {} as any,
-    })
+        selectedVaccinationFilters: [],
+        dataFilters: { data_filters: [], label: 'Vaccinations', categories_to_group_by: [] },
+      })
+    )
 
     render(<SubplotFilterCardContainer />)
 
@@ -211,31 +157,9 @@ describe('SubplotFilterCardContainer', () => {
       },
     ]
 
-    mockUseGlobalFilters.mockReturnValue({
-      state: {
-        timePeriods: mockTimePeriods,
-        geographyFilters: mockGeographyFilters,
-        thresholdFilters: { label: 'Thresholds', thresholds: mockSelectedThresholds },
-        dataFilters: { data_filters: mockSelectedVaccinations, label: 'Vaccinations', categories_to_group_by: [] },
-        coverageTemplateData: mockCoverageTemplateData,
-        timeseriesTemplateData: { title_prefix: 'Timeseries', legend_title: 'Legend' },
-        timePeriodTitle: 'Year selection',
-        chartRequestErrors: [],
-        selectedVaccinationFilters: mockSelectedVaccinations,
-        selectedGeographyFilters: multipleGeographies,
-        selectedThresholdFilters: mockSelectedThresholds,
-        selectedTimePeriod: null,
-        selectedFilters: [],
-        geographyAreas: new Map(),
-        geographyAreasLoading: false,
-        geographyAreasError: null,
-        selectedVaccination: null,
-        mapData: null,
-        mapDataLoading: false,
-        mapDataError: null,
-      },
-      actions: {} as any,
-    })
+    mockUseGlobalFilters.mockReturnValue(
+      createMockGlobalFiltersState({ selectedGeographyFilters: multipleGeographies })
+    )
 
     render(<SubplotFilterCardContainer />)
 

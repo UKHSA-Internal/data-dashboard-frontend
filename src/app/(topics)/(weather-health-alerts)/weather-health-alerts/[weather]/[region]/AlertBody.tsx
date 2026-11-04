@@ -1,6 +1,7 @@
 'use client'
 
 import clsx from 'clsx'
+import DOMPurify from 'isomorphic-dompurify'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { ReactNode, Suspense } from 'react'
@@ -53,6 +54,7 @@ export default function AlertBody({ relatedLinks, relatedLinksLayout, weather, r
 
   const { regionName, status, riskScore, text, impact, likelihood, lastUpdated, firstPublished, expiryDate } =
     healthAlert.data
+  const cleanText = DOMPurify.sanitize(text)
 
   const breadcrumbs = [
     { name: 'Home', link: '/' },
@@ -142,13 +144,14 @@ export default function AlertBody({ relatedLinks, relatedLinksLayout, weather, r
           <h3 className="govuk-heading-s govuk-!-margin-bottom-2">{t('map.alertDialog.textKey')}</h3>
           <div
             className="govuk-body [&_li]:mb-2 [&_li]:ml-4 [&_li]:list-disc [&_li]:text-left [&_ul]:py-0"
-            dangerouslySetInnerHTML={{ __html: text }}
+            dangerouslySetInnerHTML={{ __html: cleanText }}
           />
 
           {status === 'Green' ? null : (
             <>
               <h3 className="govuk-heading-s govuk-!-margin-bottom-2">{t('map.alertDialog.riskMatrixKey')}</h3>
               <div className="pb-5">
+                {/* eslint-disable-next-line @next/next/no-img-element -- static risk matrix asset */}
                 <img
                   src={'/assets/images/risk-matrix.png'}
                   height={'450'}

@@ -2,15 +2,13 @@
 
 import kebabCase from 'lodash/kebabCase'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { z } from 'zod'
 
 import { ChartFigure } from '@/api/models/Chart'
-import { Chart, ChartCardSchemas } from '@/api/models/cms/Page'
+import { ChartComponentData } from '@/api/models/cms/Page'
 import { DataClassification } from '@/api/models/DataClassification'
-import { getCharts } from '@/api/requests/charts/getCharts'
+import { FigureConfig } from '@/api/requests/charts/getCharts'
 import { TimeseriesFilterProvider, useTimeseriesFilter } from '@/app/hooks/useTimeseriesFilter'
-import { getChartTimespan, getFilteredData } from '@/app/utils/chart.utils'
-import { chartSizes } from '@/config/constants'
+import { getFilteredChartResponseData, getTimespanFromChartData, isTimeseriesChartData } from '@/app/utils/chart.utils'
 
 import { ChartNoScript } from '../ChartNoScript/ChartNoScript'
 import ClientInformationCard from '../ClientInformationCard/ClientInformationCard'
@@ -21,9 +19,10 @@ import ChartInteractive from './ChartInteractive'
 interface ChartWithFilterProps {
   lastUpdated: string
   figure: ChartFigure
+  figureConfig?: FigureConfig
+  chartHeight: number
   title: string
-  chart: Chart
-  chartData: z.infer<typeof ChartCardSchemas>['value']
+  chartData: ChartComponentData
   isPublic?: boolean
   dataClassification?: DataClassification
 }
@@ -38,15 +37,19 @@ const LoadingSpinnerContainer = () => {
 
 const ChartWithFilterContent = ({
   figure,
+  figureConfig,
+  chartHeight,
   title,
-  chart,
   chartData,
   lastUpdated,
   isPublic = true,
   dataClassification = undefined,
 }: ChartWithFilterProps) => {
   const { currentFilter } = useTimeseriesFilter()
-  const [filteredFigure, setFilteredFigure] = useState<ChartFigure>(figure)
+  const [filteredChart, setFilteredChart] = useState<{
+    figure: ChartFigure
+    figureConfig?: FigureConfig
+  }>({ figure, figureConfig })
   const [isLoading, setIsLoading] = useState(false)
   const [hasError, setHasError] = useState(false)
   const previousFilterRef = useRef<string>(currentFilter)
@@ -59,58 +62,23 @@ const ChartWithFilterContent = ({
       setIsLoading(true)
 
       try {
-        const filteredChart = getFilteredData(chartData, filter, lastUpdated)
+        const chartResponse = await getFilteredChartResponseData(
+          chartData,
+          filter,
+          lastUpdated,
+          isPublic,
+          dataClassification
+        )
 
-        if (!filteredChart) {
+        if (!chartResponse?.success || !chartResponse?.data) {
           setHasError(true)
-          setIsLoading(false)
           return
         }
 
-        let yAxisMinimum = null
-        let yAxisMaximum = null
-        let xAxisTitle = ''
-        let yAxisTitle = ''
-
-        if ('y_axis_minimum_value' in chartData) {
-          yAxisMinimum = chartData.y_axis_minimum_value
-        }
-        if ('y_axis_maximum_value' in chartData) {
-          yAxisMaximum = chartData.y_axis_maximum_value
-        }
-        if ('x_axis_title' in chartData) {
-          xAxisTitle = chartData.x_axis_title || ''
-        }
-        if ('y_axis_title' in chartData) {
-          yAxisTitle = chartData.y_axis_title || ''
-        }
-
-        const { x_axis, y_axis } = chartData
-
-        const plots = filteredChart.map((plot) => ({
-          ...plot?.value,
+        setFilteredChart((currentChart) => ({
+          figure: { frames: [], ...chartResponse.data.figure },
+          figureConfig: chartResponse.data.figure_config ?? currentChart.figureConfig,
         }))
-
-        const chartResponse = await getCharts({
-          plots,
-          x_axis,
-          y_axis,
-          x_axis_title: xAxisTitle,
-          y_axis_title: yAxisTitle,
-          y_axis_maximum_value: yAxisMaximum,
-          y_axis_minimum_value: yAxisMinimum,
-          chart_width: chartSizes['narrow'].width,
-          chart_height: chartSizes['narrow'].height,
-          is_public: isPublic,
-          data_classification: dataClassification,
-        })
-
-        if (!chartResponse.success || !chartResponse.data) {
-          setHasError(true)
-          return
-        }
-
-        setFilteredFigure({ frames: [], ...chartResponse.data.figure })
         setHasError(false)
       } catch (error) {
         console.error('Error fetching filtered chart:', error)
@@ -152,9 +120,11 @@ const ChartWithFilterContent = ({
 
   return (
     <>
-      <div className="hidden js:block">
-        <ChartSelect timespan={getChartTimespan(chart, lastUpdated)} />
-      </div>
+      {isTimeseriesChartData(chartData) && (
+        <div className="hidden js:block">
+          <ChartSelect timespan={getTimespanFromChartData(chartData, lastUpdated)} />
+        </div>
+      )}
       {hasError ? (
         <ClientInformationCard
           variant="error"
@@ -164,7 +134,12 @@ const ChartWithFilterContent = ({
       ) : isLoading ? (
         <LoadingSpinnerContainer />
       ) : (
-        <ChartInteractive staticChart={<LoadingSpinnerContainer />} figure={filteredFigure} />
+        <ChartInteractive
+          staticChart={<LoadingSpinnerContainer />}
+          figure={{ frames: [], ...filteredChart.figure }}
+          figureConfig={filteredChart.figureConfig}
+          chartHeight={chartHeight}
+        />
       )}
       <ChartNoScript title={kebabCase(title)} />
     </>

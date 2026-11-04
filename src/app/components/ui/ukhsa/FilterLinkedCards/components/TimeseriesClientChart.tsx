@@ -11,6 +11,7 @@ import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCa
 import { useErrorData } from '@/app/hooks/globalFilterHooks'
 import createChartErrorMessage from '@/app/utils/error-utils'
 import { getMinMaxFullDate, MinMaxFullDate } from '@/app/utils/time-period.utils'
+import { chartSizes } from '@/config/constants'
 
 interface ClientChartProps {
   geography: GeographiesSchemaObject
@@ -19,7 +20,7 @@ interface ClientChartProps {
   cardData: FilterLinkedTimeSeriesData
   handleLatestDate: (date: string | null) => void
   isPublic: boolean
-  dataClassification? : DataClassification | undefined
+  dataClassification?: DataClassification | undefined
 }
 
 const TimeseriesClientChart = ({
@@ -29,7 +30,7 @@ const TimeseriesClientChart = ({
   cardData,
   handleLatestDate,
   isPublic = true,
-  dataClassification = undefined
+  dataClassification = undefined,
 }: ClientChartProps) => {
   const [chartResponse, setChartResponse] = useState<ChartResponse | null>(null)
   const [loading, setLoading] = useState(true)
@@ -56,6 +57,8 @@ const TimeseriesClientChart = ({
           y_axis_maximum_value: null,
           plots: dataFilters.map((filter: DataFilter) => {
             return {
+              theme: filter.value.parameters.theme.value,
+              sub_theme: filter.value.parameters.sub_theme.value,
               topic: filter.value.parameters.topic.value,
               metric: filter.value.parameters.metric.value,
               stratum: filter.value.parameters.stratum.value,
@@ -64,7 +67,7 @@ const TimeseriesClientChart = ({
               line_colour: filter.value.colour,
               label: filter.value.label,
               geography: geography.name,
-              geography_type: geography.geography_type || undefined,
+              geography_type: geography.geography_type!,
               chart_type: 'line_multi_coloured',
               line_type: 'SOLID',
               date_from: chartDateRange.date_from,
@@ -74,7 +77,7 @@ const TimeseriesClientChart = ({
             }
           }),
           is_public: isPublic,
-          data_classification: dataClassification
+          data_classification: dataClassification,
         })
         if (chartResponse.success) {
           setChartResponse(chartResponse.data)
@@ -97,7 +100,8 @@ const TimeseriesClientChart = ({
     }
 
     fetchCharts()
-  }, [dataFilters, geography])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cardData.legend_title, chartDateRange.date_from, chartDateRange.date_to, dataFilters, geography])
 
   useEffect(() => {
     if (chartResponse?.last_updated) {
@@ -106,6 +110,7 @@ const TimeseriesClientChart = ({
     if (!chartResponse) {
       handleLatestDate(null)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chartResponse])
 
   if (loading) {
@@ -129,9 +134,16 @@ const TimeseriesClientChart = ({
   }
 
   if (chartResponse) {
-    const { figure } = chartResponse
+    const { figure, figure_config } = chartResponse
 
-    return <ChartInteractiveWrapper fallbackUntilLoaded={<h2>loading</h2>} figure={{ frames: [], ...figure }} />
+    return (
+      <ChartInteractiveWrapper
+        fallbackUntilLoaded={<h2>loading</h2>}
+        figure={{ frames: [], ...figure }}
+        chartHeight={chartSizes.narrow.height}
+        figureConfig={figure_config}
+      />
+    )
   }
 }
 

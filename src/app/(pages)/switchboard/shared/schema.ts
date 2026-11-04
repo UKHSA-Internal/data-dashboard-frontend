@@ -29,6 +29,9 @@ export const switchBoardSchema = z.object({
         status: z.coerce.number(),
         scenario: z.object({
           relatedLinksLayout: z.enum([RelatedLinksLayout.Values.Sidebar, RelatedLinksLayout.Values.Footer]),
+          topicPageIsPublic: z
+            .union([z.boolean(), z.enum(['true','false']).transform((value) => value === 'true')])
+            .default(true),
         }),
       }),
     }),

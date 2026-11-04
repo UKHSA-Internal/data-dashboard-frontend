@@ -3,9 +3,9 @@ import React, { createElement } from 'react'
 interface ReactMarkdownProps {
   children: string
   className?: string
-  components?: Record<string, React.ComponentType<any>>
-  remarkPlugins?: any[]
-  rehypePlugins?: any[]
+  components?: Record<string, React.ComponentType<Record<string, unknown>>>
+  remarkPlugins?: unknown[]
+  rehypePlugins?: unknown[]
 }
 
 /**

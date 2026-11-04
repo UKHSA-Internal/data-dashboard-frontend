@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation'
 
 import { getCognitoSignoutURL } from '@/app/utils/auth.utils'
 import { signOut } from '@/auth'
-import { logger } from '@/lib/logger'
+import { auditLog, logger } from '@/lib/logger'
 
 import { handleFormSubmit } from './useAcknowledgement'
 
@@ -13,6 +13,7 @@ jest.mock('next/navigation', () => ({
 
 jest.mock('@/auth', () => ({
   signOut: jest.fn(),
+  auth: jest.fn().mockReturnValue({ userId: '123' }),
 }))
 
 jest.mock('@/lib/logger', () => ({
@@ -21,6 +22,7 @@ jest.mock('@/lib/logger', () => ({
     info: jest.fn(),
     warn: jest.fn(),
   },
+  auditLog: jest.fn(),
 }))
 
 jest.mock('@/app/utils/auth.utils', () => ({
@@ -117,6 +119,16 @@ describe('handleFormSubmit', () => {
         expect(_error).toBeDefined()
       }
     })
+
+    it('should create audit log when user disagrees', async () => {
+      try {
+        await handleFormSubmit({}, mockFormData)
+      } catch (_error) {
+        // Expected redirect error
+      }
+
+      expect(auditLog).toHaveBeenCalledWith('123', 'TERMS_OF_SERVICE_REFUSED')
+    })
   })
 
   describe('Agree Action', () => {
@@ -204,6 +216,18 @@ describe('handleFormSubmit', () => {
       }
 
       expect(getCognitoSignoutURL).not.toHaveBeenCalled()
+    })
+
+    it('should create audit log when acknowledgement is provided', async () => {
+      mockFormData.set('acknowledgement', 'agreed')
+
+      try {
+        await handleFormSubmit({}, mockFormData)
+      } catch (_error) {
+        // Expected redirect error
+      }
+
+      expect(auditLog).toHaveBeenCalledWith('123', 'TERMS_OF_SERVICE_ACCEPTED')
     })
   })
 })

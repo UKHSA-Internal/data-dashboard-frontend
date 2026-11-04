@@ -63,6 +63,7 @@ const mockGeography: GeographiesSchemaObject = {
 
 const mockCardData: FilterLinkedSubplotData = {
   title_prefix: 'Coverage',
+  date_prefix: 'CoverageDatePrefix',
   legend_title: 'Coverage %',
   target_threshold: 95,
   target_threshold_label: 'Target',
@@ -96,7 +97,7 @@ describe('SubplotFilterCard', () => {
     expect(screen.getByText(/2024/)).toBeInTheDocument()
   })
 
-   test('renders data classification in heading when non-public', () => {
+  test('renders data classification in heading when non-public', () => {
     render(
       <SubplotFilterCard
         geography={mockGeography}
@@ -107,7 +108,7 @@ describe('SubplotFilterCard', () => {
         cardData={mockCardData}
         timePeriodTitle="Year selection"
         isPublic={false}
-        level={"official_sensitive"}
+        level={'official_sensitive'}
         authEnabled={true}
       />
     )
@@ -180,7 +181,7 @@ describe('SubplotFilterCard', () => {
     await user.click(setDateButton)
 
     await waitFor(() => {
-      expect(screen.getByText(/Last Updated/)).toBeInTheDocument()
+      expect(screen.getByText(/CoverageDatePrefix/)).toBeInTheDocument()
       expect(screen.getByText(/Formatted: 2023-12-31/)).toBeInTheDocument()
     })
   })

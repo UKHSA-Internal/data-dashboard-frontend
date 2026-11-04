@@ -57,6 +57,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_hospital_admissions_rate',
                           chart_type: 'line_multi_coloured',
@@ -91,6 +93,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_hospital_admissions_rate_by_age',
                           chart_type: 'line_multi_coloured',
@@ -110,6 +114,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_hospital_admissions_rate_by_age',
                           chart_type: 'line_multi_coloured',
@@ -129,6 +135,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_hospital_admissions_rate_by_age',
                           chart_type: 'line_multi_coloured',
@@ -148,6 +156,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_hospital_admissions_rate_by_age',
                           chart_type: 'line_multi_coloured',
@@ -167,6 +177,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_hospital_admissions_rate_by_age',
                           chart_type: 'line_multi_coloured',
@@ -186,6 +198,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_hospital_admissions_rate_by_age',
                           chart_type: 'line_multi_coloured',
@@ -205,6 +219,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_hospital_admissions_rate_by_age',
                           chart_type: 'line_multi_coloured',
@@ -224,6 +240,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_hospital_admissions_rate_by_age',
                           chart_type: 'line_multi_coloured',
@@ -267,6 +285,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_icuhdu_admissions_rate',
                           chart_type: 'line_multi_coloured',
@@ -301,6 +321,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_icu_admissions_rate_by_age',
                           chart_type: 'line_multi_coloured',
@@ -320,6 +342,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_icu_admissions_rate_by_age',
                           chart_type: 'line_multi_coloured',
@@ -339,6 +363,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_icu_admissions_rate_by_age',
                           chart_type: 'line_multi_coloured',
@@ -358,6 +384,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_icu_admissions_rate_by_age',
                           chart_type: 'line_multi_coloured',
@@ -377,6 +405,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_icu_admissions_rate_by_age',
                           chart_type: 'line_multi_coloured',
@@ -396,6 +426,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_icu_admissions_rate_by_age',
                           chart_type: 'line_multi_coloured',
@@ -415,6 +447,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_icu_admissions_rate_by_age',
                           chart_type: 'line_multi_coloured',
@@ -434,6 +468,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_icu_admissions_rate_by_age',
                           chart_type: 'line_multi_coloured',
@@ -485,6 +521,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_positivity',
                           chart_type: 'bar',
@@ -519,6 +557,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -538,6 +578,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -557,6 +599,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -576,6 +620,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -595,6 +641,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',

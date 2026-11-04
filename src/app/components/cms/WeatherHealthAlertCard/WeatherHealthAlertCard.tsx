@@ -17,13 +17,15 @@ type WeatherHealthAlertCardProps = {
     }
   }
   readonly className?: string
+  readonly topicFilterId?: string
 }
 
-export function WeatherHealthAlertCard({ value, className }: WeatherHealthAlertCardProps) {
+export function WeatherHealthAlertCard({ value, className, topicFilterId }: WeatherHealthAlertCardProps) {
   const showSource = hasSource(value.source)
 
   return (
     <div
+      data-topic-filter-id={topicFilterId}
       className={clsx(
         'mb-3 sm:mb-6 lg:mb-0 lg:w-2/3 xl:w-1/2',
         // Used by the PopularTopicsCard height-sync wrapper to keep the optional Source at the bottom.

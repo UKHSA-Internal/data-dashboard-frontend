@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
@@ -8,16 +9,14 @@ import MenuBar from '@/app/components/ui/ukhsa/Menu/MenuBar'
 import { PhaseBanner } from '@/app/components/ui/ukhsa/PhaseBanner/PhaseBanner'
 import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
 import { getServerTranslation } from '@/app/i18n'
-import { authEnabled } from '@/config/constants'
+import { NO_INDEX_ROBOTS } from '@/app/utils/seo.utils'
 
 interface LayoutProps {
-  children: ReactNode
+  readonly children: ReactNode
 }
 
-export function generateMetadata() {
-  return {
-    robots: authEnabled ? 'noindex, nofollow' : undefined,
-  }
+export const metadata: Metadata = {
+  robots: NO_INDEX_ROBOTS,
 }
 
 export default async function Layout({ children }: LayoutProps) {
@@ -29,6 +28,7 @@ export default async function Layout({ children }: LayoutProps) {
       <MenuBar />
 
       <div className="govuk-width-container bg-blue" />
+
       <div className="govuk-width-container print:hidden">
         <PhaseBanner tag={t('feedbackBannerPhase')}>
           <Trans i18nKey="feedbackBanner" t={t}>
@@ -41,21 +41,25 @@ export default async function Layout({ children }: LayoutProps) {
 
       {!globalBanners || globalBanners.length <= 0
         ? null
-        : globalBanners.map(({ title: heading, banner_type: variant, body }, index) => (
-            <div key={index} className="govuk-width-container">
-              <div className="govuk-grid-row">
-                <div className="govuk-grid-column-three-quarters">
-                  <Announcement
-                    heading={heading}
-                    variant={variant}
-                    className="govuk-!-margin-top-4 govuk-!-margin-bottom-1"
-                  >
-                    {body}
-                  </Announcement>
+        : globalBanners.map(({ title: heading, banner_type: variant, body }) => {
+            const key = `${heading}-${variant}-${body}`
+            return (
+              <div key={key} className="govuk-width-container">
+                <div className="govuk-grid-row">
+                  <div className="govuk-grid-column-three-quarters">
+                    <Announcement
+                      heading={heading}
+                      variant={variant}
+                      className="govuk-!-margin-top-4 govuk-!-margin-bottom-1"
+                    >
+                      {body}
+                    </Announcement>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
+
       <div className="govuk-width-container">
         <div className="govuk-!-padding-top-4 flex flex-col gap-0 xl:gap-7">
           <main className="govuk-main-wrapper govuk-!-padding-top-0" id="main-content">

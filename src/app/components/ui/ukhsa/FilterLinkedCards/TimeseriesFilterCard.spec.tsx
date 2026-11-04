@@ -101,6 +101,7 @@ const mockDataFilters: DataFilter[] = [
 
 const mockCardData: FilterLinkedTimeSeriesData = {
   title_prefix: 'Cases',
+  date_prefix: 'Timeseries date prefix',
   legend_title: 'Number of cases',
 }
 
@@ -129,7 +130,7 @@ describe('TimeseriesFilterCard', () => {
       />
     )
 
-    const description = screen.queryByText(/Last Updated/)
+    const description = screen.queryByText(/Timeseries date prefix/)
     expect(description).not.toBeInTheDocument()
   })
 
@@ -145,13 +146,13 @@ describe('TimeseriesFilterCard', () => {
       />
     )
 
-    expect(screen.queryByText(/Last Updated/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/Timeseries date prefix/)).not.toBeInTheDocument()
 
     const setDateButton = screen.getByText('Set Date')
     await user.click(setDateButton)
 
     await waitFor(() => {
-      expect(screen.getByText(/Last Updated/)).toBeInTheDocument()
+      expect(screen.getByText(/Timeseries date prefix/)).toBeInTheDocument()
       expect(screen.getByText(/Formatted: 2023-12-31/)).toBeInTheDocument()
     })
   })

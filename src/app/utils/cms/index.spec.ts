@@ -6,6 +6,7 @@ import { PageResponse } from '@/api/requests/cms/getPage'
 import { PageType } from '@/api/requests/cms/getPages'
 import { client } from '@/api/utils/api.utils'
 import { SearchParams, Slug } from '@/app/types'
+import { NO_INDEX_ROBOTS } from '@/app/utils/seo.utils'
 import { logger } from '@/lib/logger'
 import {
   bulkDownloadsPageMock,
@@ -247,6 +248,72 @@ describe('getPageMetadata', () => {
         title: 'COVID-19  in England | UKHSA data dashboard',
       },
     })
+  })
+
+  test('Public CMS topic pages are indexable', async () => {
+    getPages.mockResolvedValueOnce({
+      status: 200,
+      data: pagesWithTopicTypeMock,
+    })
+    getPage.mockResolvedValueOnce({
+      status: 200,
+      data: {
+        ...covid19PageMock,
+        is_public: true,
+      },
+    })
+
+    const result = await getPageMetadata(['respiratory-viruses', 'covid-19'], {}, PageType.Topic)
+
+    expect(result.robots).toBeUndefined()
+  })
+
+  test('Non-public CMS topic pages have noindex, nofollow metadata', async () => {
+    getPages.mockResolvedValueOnce({
+      status: 200,
+      data: pagesWithTopicTypeMock,
+    })
+    getPage.mockResolvedValueOnce({
+      status: 200,
+      data: {
+        ...covid19PageMock,
+        is_public: false,
+      },
+    })
+
+    const result = await getPageMetadata(['respiratory-viruses', 'covid-19'], {}, PageType.Topic)
+
+    expect(result.robots).toBe(NO_INDEX_ROBOTS)
+  })
+
+  test('Non-public metrics child pages have noindex, nofollow metadata', async () => {
+    getPages.mockResolvedValueOnce({
+      status: 200,
+      data: {
+        meta: { total_count: 1 },
+        items: [
+          {
+            id: metricsChildMocks[0].id,
+            title: metricsChildMocks[0].title,
+            seo_change_frequency: metricsChildMocks[0].seo_change_frequency,
+            seo_priority: metricsChildMocks[0].seo_priority,
+            meta: metricsChildMocks[0].meta,
+            is_public: metricsChildMocks[0].is_public,
+          },
+        ],
+      },
+    })
+    getPage.mockResolvedValueOnce({
+      status: 200,
+      data: {
+        ...metricsChildMocks[0],
+        is_public: false,
+      },
+    })
+
+    const result = await getPageMetadata(['metrics-documentation', 'new-cases-7days-sum'], {}, PageType.MetricsChild)
+
+    expect(result.robots).toBe(NO_INDEX_ROBOTS)
   })
 
   test('Getting metadata for metrics-documentation', async () => {

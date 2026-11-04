@@ -4,6 +4,15 @@ import { NextRequest, NextResponse } from 'next/server'
 import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
 
+
+// Allow-list to prevent this route being used as a generic API proxy.
+// Currently only bulk downloads are supported. Add new endpoints explicitly.
+const ALLOWED_ENDPOINTS = new Set(['bulkdownloads/v1'])
+
+function isAllowedEndpoint(endpoint: string): boolean {
+  return ALLOWED_ENDPOINTS.has(endpoint)
+}
+
 export async function GET(req: NextRequest) {
   try {
     const searchParams = new URL(req.url).searchParams
@@ -13,6 +22,18 @@ export async function GET(req: NextRequest) {
     }
 
     const endpoint = searchParams.get('endpoint') as string
+
+    if (!isAllowedEndpoint(endpoint)) {
+      logger.warn(
+        'Blocked download endpoint: %s',
+        endpoint,
+      )
+
+      return NextResponse.json(
+        { error: 'Endpoint not allowed' },
+        { status: 403 },
+      )
+    }
 
     logger.info('Triggering download to %s', endpoint)
 
@@ -42,6 +63,18 @@ export async function POST(req: NextRequest) {
     }
 
     const endpoint = body.get('endpoint') as string
+
+    if (!isAllowedEndpoint(endpoint)) {
+      logger.warn(
+        'Blocked download endpoint: %s',
+        endpoint,
+      )
+
+      return NextResponse.json(
+        { error: 'Endpoint not allowed' },
+        { status: 403 },
+      )
+    }
 
     logger.info('Triggering download to %s', endpoint)
 

@@ -66,6 +66,66 @@ describe('Tabs', () => {
     const contentElement = screen.getByText(/test content/i)
     expect(contentElement).toBeInTheDocument()
   })
+
+  test('renders with no padding when class applied', () => {
+    render(
+      <Tabs>
+        <TabsList>
+          <TabsTrigger value="tab-1">Test trigger</TabsTrigger>
+        </TabsList>
+        <TabsContent value="tab-1" noPadding>
+          Test content
+        </TabsContent>
+      </Tabs>
+    )
+
+    const contentElement = screen.getByText(/Test content/i)
+    expect(contentElement).not.toHaveClass('js:p-3', 'js:lg:px-4', 'js:lg:py-6')
+  })
+
+  test('renders with padding when no class applied', () => {
+    render(
+      <Tabs>
+        <TabsList>
+          <TabsTrigger value="tab-1">Test trigger</TabsTrigger>
+        </TabsList>
+        <TabsContent value="tab-1">Test content</TabsContent>
+      </Tabs>
+    )
+
+    const contentElement = screen.getByText(/Test content/i)
+    expect(contentElement).toHaveClass('js:p-3', 'js:lg:px-4', 'js:lg:py-6')
+  })
+})
+
+test('renders standard width tab by default', () => {
+  render(
+    <Tabs>
+      <TabsList>
+        <TabsTrigger value="tab-1">Test trigger</TabsTrigger>
+      </TabsList>
+    </Tabs>
+  )
+
+  const triggerElement = screen.getByRole('tab', { name: /test trigger/i })
+  expect(triggerElement).toHaveClass('js:lg:data-[state=active]:px-[19px]')
+  expect(triggerElement).not.toHaveClass('js:lg:data-[state=active]:px-7')
+})
+
+test('renders wider tab when class applied', () => {
+  render(
+    <Tabs>
+      <TabsList>
+        <TabsTrigger value="tab-1" wideTab>
+          Test trigger
+        </TabsTrigger>
+      </TabsList>
+    </Tabs>
+  )
+
+  const triggerElement = screen.getByRole('tab', { name: /test trigger/i })
+  expect(triggerElement).toHaveClass('js:lg:data-[state=active]:px-7')
+  expect(triggerElement).not.toHaveClass('js:lg:data-[state=active]:px-[19px]')
 })
 
 describe('Opening a new tab', () => {

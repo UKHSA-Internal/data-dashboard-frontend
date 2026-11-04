@@ -11,6 +11,7 @@ export function UKHSALogoLayer({ position }: LogoLayerProps) {
   return (
     <Control position={position}>
       <div data-testid="logo-layer">
+        {/* eslint-disable-next-line @next/next/no-img-element -- static map overlay logo */}
         <img
           src={'/assets/images/ukhsa_lesser_arms_stacked_logo.png'}
           height={'125px'}

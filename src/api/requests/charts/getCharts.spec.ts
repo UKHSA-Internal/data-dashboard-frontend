@@ -5,6 +5,19 @@ import { chartSizes } from '@/config/constants'
 import { logger } from '@/lib/logger'
 
 import { getCharts, responseSchema } from './getCharts'
+import { getDualCategoryCharts, RequestParams as DualCategoryRequestParams } from './getDualCategoryCharts'
+
+let mockIsSSR = false
+jest.mock('@/app/utils/app.utils', () => ({
+  ...jest.requireActual('@/app/utils/app.utils'),
+  get isSSR() {
+    return mockIsSSR
+  },
+}))
+
+beforeEach(() => {
+  mockIsSSR = false
+})
 
 test('Returns a chart svg and last updated date', async () => {
   const mockResponseData: z.infer<typeof responseSchema> = {
@@ -39,12 +52,16 @@ test('Returns a chart svg and last updated date', async () => {
     chart_width: chartSizes.narrow.width,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
+        geography: 'England',
+        geography_type: 'Nation',
         chart_type: 'line_with_shaded_section',
       },
     ],
-    is_public: true
+    is_public: true,
   })
 
   expect(result).toEqual({
@@ -66,12 +83,16 @@ test('Handles API errors when data is missing (400 status code)', async () => {
     chart_width: chartSizes.narrow.width,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
+        geography: 'England',
+        geography_type: 'Nation',
         chart_type: 'line_with_shaded_section',
       },
     ],
-    is_public: true
+    is_public: true,
   })
 
   expect(result).toEqual({
@@ -121,12 +142,16 @@ test('Handles API errors for non-400 error responses', async () => {
     chart_width: chartSizes.narrow.width,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
+        geography: 'England',
+        geography_type: 'Nation',
         chart_type: 'line_with_shaded_section',
       },
     ],
-    is_public: true
+    is_public: true,
   })
 
   expect(logger.error).toHaveBeenNthCalledWith(1, 'getCharts error: Failed')
@@ -176,12 +201,16 @@ test('Handles non-Error instances in catch block', async () => {
     chart_width: chartSizes.narrow.width,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
+        geography: 'England',
+        geography_type: 'Nation',
         chart_type: 'line_with_shaded_section',
       },
     ],
-    is_public: true
+    is_public: true,
   })
 
   expect(result.success).toBe(false)
@@ -198,12 +227,16 @@ test('Handles error when error.code is undefined', async () => {
     chart_width: chartSizes.narrow.width,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
+        geography: 'England',
+        geography_type: 'Nation',
         chart_type: 'line_with_shaded_section',
       },
     ],
-    is_public: true
+    is_public: true,
   })
 
   expect(logger.error).toHaveBeenCalledWith('getCharts error: Failed')
@@ -228,12 +261,16 @@ test('Handles Zod validation error when response data is invalid', async () => {
     chart_width: chartSizes.narrow.width,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
+        geography: 'England',
+        geography_type: 'Nation',
         chart_type: 'line_with_shaded_section',
       },
     ],
-    is_public: true
+    is_public: true,
   })
 
   expect(logger.error).toHaveBeenCalledWith(expect.stringContaining('Zod Validation error:'))
@@ -252,14 +289,183 @@ test('Handles error when error.code is 400', async () => {
     chart_width: chartSizes.narrow.width,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
+        geography: 'England',
+        geography_type: 'Nation',
         chart_type: 'line_with_shaded_section',
       },
     ],
-    is_public: true
+    is_public: true,
   })
 
   expect(logger.info).toHaveBeenCalledWith('POST failed (no data) charts/v3 %s', 'new_cases_7days_sum')
   expect(result.success).toBe(false)
+})
+
+describe('getDualCategoryCharts', () => {
+  const mockRequestBody: DualCategoryRequestParams = {
+    chart_height: chartSizes.narrow.height,
+    chart_width: chartSizes.narrow.width,
+    x_axis: null,
+    y_axis: null,
+    chart_type: 'stacked_bar',
+    static_fields: {
+      theme: 'infectious_disease',
+      sub_theme: 'respiratory',
+      topic: 'COVID-19',
+      metric: 'COVID-19_cases_casesByDay',
+      geography_type: 'Nation',
+      geography: 'England',
+    },
+    primary_field_values: ['2024-01-01'],
+    secondary_category: 'age',
+    segments: [{ secondary_field_value: '0-4', colour: 'COLOUR_1_DARK_BLUE' }],
+    is_public: false,
+    data_classification: 'official_sensitive',
+  }
+
+  const mockResponseData = {
+    chart: 'mock-chart-svg',
+    alt_text: 'Mock chart',
+    last_updated: '2025-05-21',
+    figure: { data: [], layout: {} },
+  }
+
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  test('returns parsed data on success', async () => {
+    jest.mocked(client).mockResolvedValueOnce({ data: mockResponseData, status: 200 })
+
+    const result = await getDualCategoryCharts(mockRequestBody)
+
+    expect(result.success).toBe(true)
+    expect(result.data?.chart).toBe('mock-chart-svg')
+    expect(client).toHaveBeenCalledWith(
+      'proxy/charts/dual-category/v1',
+      {
+        body: expect.objectContaining({
+          is_public: false,
+          data_classification: 'official_sensitive',
+        }),
+      },
+      false
+    )
+  })
+
+  test('logs validation error and returns failed parse when response data is invalid', async () => {
+    jest.mocked(client).mockResolvedValueOnce({ data: { invalid: 'data' }, status: 200 })
+
+    const result = await getDualCategoryCharts(mockRequestBody)
+
+    expect(logger.error).toHaveBeenCalledWith(expect.stringContaining('getDualCategoryCharts Zod Validation error:'))
+    expect(result.success).toBe(false)
+  })
+
+  test('logs info on 400 error and returns failed parse', async () => {
+    const error = new Error('Bad Request')
+    error.code = 400
+    jest.mocked(client).mockRejectedValueOnce(error)
+
+    const result = await getDualCategoryCharts(mockRequestBody)
+
+    expect(logger.info).toHaveBeenCalledWith(
+      'POST failed (no data) charts/dual-category/v1 %s',
+      mockRequestBody.static_fields.metric
+    )
+    expect(result.success).toBe(false)
+  })
+
+  test('logs error on non-400 Error and returns failed parse', async () => {
+    const error = new Error('Server Error')
+    error.code = 500
+    jest.mocked(client).mockRejectedValueOnce(error)
+
+    const result = await getDualCategoryCharts(mockRequestBody)
+
+    expect(logger.error).toHaveBeenCalledWith('getDualCategoryCharts error: Server Error')
+    expect(result.success).toBe(false)
+  })
+
+  test('returns failed parse for non-Error throws', async () => {
+    jest.mocked(client).mockRejectedValueOnce('string error')
+
+    const result = await getDualCategoryCharts(mockRequestBody)
+
+    expect(result.success).toBe(false)
+  })
+})
+
+test('requests the proxy path when not server-side rendered', async () => {
+  mockIsSSR = false
+
+  jest.mocked(client).mockResolvedValueOnce({
+    data: {
+      chart: 'mocked-chart-svg',
+      alt_text: 'alt text',
+      last_updated: '123',
+      figure: { data: [], layout: { xaxis: {}, yaxis: {} } },
+    },
+    status: 200,
+  })
+
+  await getCharts({
+    x_axis: null,
+    y_axis: null,
+    chart_height: chartSizes.narrow.height,
+    chart_width: chartSizes.narrow.width,
+    plots: [
+      {
+        topic: 'COVID-19',
+        metric: 'new_cases_7days_sum',
+        chart_type: 'line_with_shaded_section',
+        theme: '',
+        sub_theme: '',
+        geography: '',
+        geography_type: '',
+      },
+    ],
+    is_public: true,
+  })
+
+  expect(client).toHaveBeenCalledWith('proxy/charts/v3', expect.anything(), true)
+})
+
+test('requests the charts path when server-side rendered', async () => {
+  mockIsSSR = true
+
+  jest.mocked(client).mockResolvedValueOnce({
+    data: {
+      chart: 'mocked-chart-svg',
+      alt_text: 'alt text',
+      last_updated: '123',
+      figure: { data: [], layout: { xaxis: {}, yaxis: {} } },
+    },
+    status: 200,
+  })
+
+  await getCharts({
+    x_axis: null,
+    y_axis: null,
+    chart_height: chartSizes.narrow.height,
+    chart_width: chartSizes.narrow.width,
+    plots: [
+      {
+        topic: 'COVID-19',
+        metric: 'new_cases_7days_sum',
+        chart_type: 'line_with_shaded_section',
+        theme: '',
+        sub_theme: '',
+        geography: '',
+        geography_type: '',
+      },
+    ],
+    is_public: true,
+  })
+
+  expect(client).toHaveBeenCalledWith('charts/v3', expect.anything(), true)
 })

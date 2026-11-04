@@ -1,62 +1,105 @@
-import { z } from 'zod'
-
-import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
+import { ChartComponentData, DualCategoryChartCardValue, SingleCategoryChartCardValue } from '@/api/models/cms/Page'
 import { getTables } from '@/api/requests/tables/getTables'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
+import { isDualCategoryChartCardValue } from '@/app/utils/chart.utils'
 import { authEnabled } from '@/config/constants'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 import { DownloadForm } from './DownloadForm'
 
 interface DownloadProps {
-  /* Request metadata from the CMS required to fetch from the tables api */
-  data: z.infer<typeof WithChartHeadlineAndTrendCard>['value'] | z.infer<typeof WithChartCard>['value']
-  isPublic?: boolean
+  readonly data: ChartComponentData
+  readonly isPublic?: boolean
 }
 
-export async function Download({
-  data: { chart, y_axis, x_axis, tag_manager_event_id, confidence_intervals },
-  isPublic,
-}: DownloadProps) {
-  const pathname = await getPathname()
-  const [areaType, areaName] = await getAreaSelector()
+const getDualCategoryDownloadData = (
+  data: DualCategoryChartCardValue,
+  areaType: string | null,
+  areaName: string | null,
+  isPublic?: boolean
+) => {
+  return getTables(
+    {
+      chart_type: data.chart_type,
+      static_fields: {
+        ...data.static_fields,
+        geography_type: areaType ?? data.static_fields.geography_type,
+        geography: areaName ?? data.static_fields.geography,
+      },
+      primary_field_values: data.primary_field_values,
+      secondary_category: data.secondary_category,
+      segments: data.segments.map(({ value }) => value),
+      x_axis: data.x_axis,
+      y_axis: data.y_axis,
+    },
+    isPublic
+  )
+}
 
-  const plots = chart.map((plot) => ({
+const getSingleCategoryDownloadData = (
+  data: SingleCategoryChartCardValue,
+  areaType: string | null,
+  areaName: string | null,
+  isPublic?: boolean
+) => {
+  const plots = data.chart.map((plot) => ({
     ...plot.value,
     geography_type: areaType ?? plot.value.geography_type,
     geography: areaName ?? plot.value.geography,
   }))
 
-  // Call the table endpoint to check ahead of time if we have any data to download
-  const tableResponse = await getTables(
+  return getTables(
     {
       plots,
-      x_axis,
-      y_axis,
+      x_axis: data.x_axis,
+      y_axis: data.y_axis,
     },
     isPublic
   )
+}
 
-  if (tableResponse.success) {
+export async function Download({ data, isPublic }: DownloadProps) {
+  const pathname = await getPathname()
+  const [areaType, areaName] = await getAreaSelector()
+  const isDualCategory = isDualCategoryChartCardValue(data)
+
+  const tableResponse = isDualCategory
+    ? await getDualCategoryDownloadData(data, areaType, areaName, isPublic)
+    : await getSingleCategoryDownloadData(data, areaType, areaName, isPublic)
+
+  if (!tableResponse.success) {
+    return <ChartEmpty resetHref={pathname} />
+  }
+
+  if (isDualCategory) {
     return (
       <DownloadForm
-        chart={chart.map((plot) => ({
-          ...plot,
-          value: {
-            ...plot.value,
-            geography_type: areaType ?? plot.value.geography_type,
-            geography: areaName ?? plot.value.geography,
-          },
-        }))}
-        xAxis={x_axis}
-        tagManagerEventId={tag_manager_event_id}
-        confidenceIntervals={confidence_intervals ?? false}
+        dualCategoryData={data}
+        tagManagerEventId={data.tag_manager_event_id}
         isPublic={isPublic}
         authEnabled={authEnabled}
       />
     )
   }
 
-  return <ChartEmpty resetHref={pathname} />
+  const chart = data.chart.map((plot) => ({
+    ...plot,
+    value: {
+      ...plot.value,
+      geography_type: areaType ?? plot.value.geography_type,
+      geography: areaName ?? plot.value.geography,
+    },
+  }))
+
+  return (
+    <DownloadForm
+      chart={chart}
+      xAxis={data.x_axis}
+      tagManagerEventId={data.tag_manager_event_id}
+      confidenceIntervals={data.confidence_intervals ?? false}
+      isPublic={isPublic}
+      authEnabled={authEnabled}
+    />
+  )
 }

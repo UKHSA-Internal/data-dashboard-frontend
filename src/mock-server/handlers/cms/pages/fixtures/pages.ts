@@ -14,6 +14,8 @@ import {
   healthTopicsPageMock,
   influenzaPageMock,
   landingPageMock,
+  leadPageMock,
+  loggedOutPageMock,
   metricsChildMocks,
   metricsParentMock,
   otherRespiratoryVirusesPageMock,
@@ -121,7 +123,7 @@ export const pagesWithAcknowledgementTypeMock: PagesResponse = {
 
 export const pagesWithCommonTypeMock: PagesResponse = {
   meta: {
-    total_count: 6,
+    total_count: 7,
   },
   items: [
     {
@@ -215,19 +217,19 @@ export const pagesWithCommonTypeMock: PagesResponse = {
       title: compliancePageMock.title,
     },
     {
-      id: startPageMock.id,
+      id: loggedOutPageMock.id,
       meta: {
-        type: startPageMock.meta.type,
-        detail_url: startPageMock.meta.detail_url,
-        html_url: startPageMock.meta.html_url,
-        slug: startPageMock.meta.slug,
-        search_description: startPageMock.meta.search_description,
-        show_in_menus: startPageMock.meta.show_in_menus,
-        first_published_at: startPageMock.meta.first_published_at,
+        type: loggedOutPageMock.meta.type,
+        detail_url: loggedOutPageMock.meta.detail_url,
+        html_url: loggedOutPageMock.meta.html_url,
+        slug: loggedOutPageMock.meta.slug,
+        search_description: loggedOutPageMock.meta.search_description,
+        show_in_menus: loggedOutPageMock.meta.show_in_menus,
+        first_published_at: loggedOutPageMock.meta.first_published_at,
       },
-      seo_change_frequency: startPageMock.seo_change_frequency,
-      seo_priority: startPageMock.seo_priority,
-      title: startPageMock.title,
+      seo_change_frequency: loggedOutPageMock.seo_change_frequency,
+      seo_priority: loggedOutPageMock.seo_priority,
+      title: loggedOutPageMock.title,
     },
   ],
 }
@@ -386,7 +388,7 @@ export const pagesWithTopicsListTypeMock: PagesResponse = {
 
 export const pagesWithTopicTypeMock: PagesResponse = {
   meta: {
-    total_count: 4,
+    total_count: 5,
   },
   items: [
     {
@@ -448,6 +450,21 @@ export const pagesWithTopicTypeMock: PagesResponse = {
       seo_change_frequency: vaccinationCoverageMock.seo_change_frequency,
       seo_priority: vaccinationCoverageMock.seo_priority,
       title: vaccinationCoverageMock.title,
+    },
+    {
+      id: leadPageMock.id,
+      meta: {
+        type: leadPageMock.meta.type,
+        detail_url: leadPageMock.meta.detail_url,
+        html_url: leadPageMock.meta.html_url,
+        slug: leadPageMock.meta.slug,
+        search_description: leadPageMock.meta.search_description,
+        show_in_menus: leadPageMock.meta.show_in_menus,
+        first_published_at: leadPageMock.meta.first_published_at,
+      },
+      seo_change_frequency: leadPageMock.seo_change_frequency,
+      seo_priority: leadPageMock.seo_priority,
+      title: leadPageMock.title,
     },
   ],
 }
