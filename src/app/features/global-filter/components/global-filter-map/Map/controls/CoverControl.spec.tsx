@@ -155,6 +155,7 @@ describe('CoverControl', () => {
       // Arrange & Act
       const { getByTestId } = render(
         <TestWrapper>
+          {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
           <CoverControl position="topright" className="test-class" />
         </TestWrapper>
       )

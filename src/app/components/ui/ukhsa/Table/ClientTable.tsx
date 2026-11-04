@@ -58,7 +58,7 @@ export function ClientTable({
 
   // hardcoded for timeseries charts but want to be parameters depending on the use case.
   const title = `${cardData.title_prefix}`
-  const geographyDetails = `(${geographyParent!.name}, ${geography.name})`
+  const geographyDetails = `(${geographyParent?.name ?? ''}, ${geography.name})`
   const x_axis_title = 'year'
   const y_axis_title = `Vaccine Coverage %`
   const x_axis = 'date'
@@ -79,6 +79,8 @@ export function ClientTable({
           y_axis_maximum_value: null,
           plots: dataFilters.map((filter: DataFilter) => {
             return {
+              theme: filter.value.parameters.theme.value,
+              sub_theme: filter.value.parameters.sub_theme.value,
               topic: filter.value.parameters.topic.value,
               metric: filter.value.parameters.metric.value,
               stratum: filter.value.parameters.stratum.value,
@@ -87,7 +89,7 @@ export function ClientTable({
               line_colour: filter.value.colour,
               label: filter.value.label,
               geography: geography.name,
-              geography_type: geography.geography_type || undefined,
+              geography_type: geography.geography_type!,
               chart_type: 'line_multi_coloured',
               line_type: 'SOLID',
               date_from: chartDateRange.date_from,
@@ -112,7 +114,8 @@ export function ClientTable({
     }
 
     fetchCharts()
-  }, [dataFilters, geography])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chartDateRange.date_from, chartDateRange.date_to, dataFilters, geography])
 
   useEffect(() => {
     const fetchTables = async () => {
@@ -125,6 +128,8 @@ export function ClientTable({
             y_axis: y_axis,
             plots: dataFilters.map((filter: DataFilter) => {
               return {
+                theme: filter.value.parameters.theme.value,
+                sub_theme: filter.value.parameters.sub_theme.value,
                 topic: filter.value.parameters.topic.value,
                 metric: filter.value.parameters.metric.value,
                 stratum: filter.value.parameters.stratum.value,
@@ -133,7 +138,7 @@ export function ClientTable({
                 line_colour: filter.value.colour,
                 label: filter.value.label,
                 geography: geography.name,
-                geography_type: geography.geography_type || undefined,
+                geography_type: geography.geography_type!,
                 chart_type: 'line_multi_coloured',
                 line_type: 'SOLID',
                 date_from: chartDateRange.date_from,
@@ -158,7 +163,8 @@ export function ClientTable({
     }
 
     fetchTables()
-  }, [dataFilters, geography])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chartDateRange.date_from, chartDateRange.date_to, dataFilters, geography])
 
   if (tableLoading || chartLoading) {
     return (

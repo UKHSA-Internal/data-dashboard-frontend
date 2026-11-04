@@ -1,12 +1,6 @@
 import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 import { isSSR, isWellKnownEnvironment } from '@/app/utils/app.utils'
-import {
-  authEnabled,
-  cacheFetchTags,
-  ISRCachingEnabled,
-  nonPublicCacheRevalidationInterval,
-  publicCacheRevalidationInterval,
-} from '@/config/constants'
+import { authEnabled, cacheFetchTags, ISRCachingEnabled, publicCacheRevalidationInterval } from '@/config/constants'
 import { getClientSession, getServerSession } from '@/lib/auth/auth-session'
 
 import { getApiBaseUrl } from '../requests/helpers'
@@ -21,15 +15,15 @@ interface Options {
   next?: { revalidate: number }
 }
 
-function getRevalidateInterval(isPublic: boolean, customConfig: Pick<Options, 'next'>) {
+/**
+ * Returns the cache revalidation interval for the HTTP Cache, in seconds
+ *
+ * @returns revalidation interval in seconds
+ */
+function getRevalidateInterval() {
   if (ISRCachingEnabled) {
     return publicCacheRevalidationInterval
   }
-
-  if (authEnabled && isPublic) {
-    return customConfig.next?.revalidate ?? nonPublicCacheRevalidationInterval
-  }
-
   return 0
 }
 
@@ -58,44 +52,27 @@ export async function getAuthToken(): Promise<string | undefined> {
   }
 }
 
-/**
- * Fetch client instance
- * This is the fetch instance which all requests should be initiated from.
- * It handles automatic retries and auth headers
- */
-
-export async function client<T>(
-  endpoint: string,
-  { body, searchParams, baseUrl = getApiBaseUrl(), ...customConfig }: Options = {},
-  // Defaulting all requests to public (non-authenticated) for now.
-  isPublic: boolean = true
-): Promise<{ data: T | null; status: number; error?: Error; headers?: Headers }> {
-  const headers: HeadersInit = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
-
-  // read access token only if request is not public
-  // or if it's a pages endpoint, which currently also requires authentication
-  const isPagesEndpoint = endpoint.includes('pages')
-  const accessToken = isPagesEndpoint || isPublic === false ? await getAuthToken() : undefined
-  // Send the local mock overrides with all requests
-  if (!isWellKnownEnvironment() && isSSR) {
-    // Import cookies dynamically only in node environment to not trigger nextjs warnings
-    // TODO: Investigate the above. It means currently any client-side requests won't receive dynamically mocked responses
-    const { cookies } = await import('next/headers')
-    const cookieStore = await cookies()
-    const switchBoardCookie = cookieStore.get(UKHSA_SWITCHBOARD_COOKIE_NAME)
-    if (switchBoardCookie) {
-      headers.cookie = switchBoardCookie.value
-    }
-  }
-
-  const fetchOptions: RequestInit & { next?: { revalidate: number; tags: string[] } } = {
+function clientBuildFetchOptions({
+  body,
+  isPublic,
+  customConfig,
+  headers,
+  accessToken,
+}: {
+  body?: unknown
+  isPublic: boolean
+  customConfig: any
+  headers: Record<string, string>
+  accessToken?: string
+}): RequestInit & { next?: { revalidate: number; tags: string[] } } {
+  return {
     method: body ? 'POST' : 'GET',
     body: body ? JSON.stringify(body) : undefined,
     ...customConfig,
     next: {
-      // The public dashboard is behind a CDN so doesn't rely on any Next.js caching
-      // However, the auth instance is not, so we rely on Next.js caching for unauthenticated requests
-      revalidate: getRevalidateInterval(isPublic, customConfig),
+      // Bypass caching if this is an authenticated request, otherwise get the
+      // revalidate interval
+      revalidate: !!accessToken ? 0 : getRevalidateInterval(),
       tags: authEnabled && isPublic ? [cacheFetchTags.public] : [],
     },
     headers: {
@@ -106,33 +83,215 @@ export async function client<T>(
       ...(accessToken ? { 'X-UHD-AUTH': `Bearer ${accessToken}` } : {}),
     },
   }
+}
 
-  const url = `${baseUrl}${baseUrl && '/'}${endpoint}${searchParams ? `?${searchParams.toString()}` : ''}`
-  return fetch(url, fetchOptions).then(async (response) => {
-    const { status, ok, headers } = response
+// Utility to read preview info from cookies (SSR and CSR)
+export async function getCookieValue(key: string): Promise<string> {
+  let result: string = ''
 
-    if (ok) {
-      try {
-        const type = response.headers.get('Content-Type')
+  if (globalThis.window === undefined) {
+    // --- Server-side ---
+    try {
+      // Dynamically import next/headers only on the server
+      const { cookies } = require('next/headers')
+      const cookieStore = await cookies()
+      result = cookieStore.get(key)?.value ?? ''
+    } catch {}
+  } else {
+    // --- Client-side ---
+    result =
+      document.cookie
+        .split('; ')
+        .find((row) => row.startsWith(`${key}=`))
+        ?.split('=')[1] ?? ''
+  }
+  return result
+}
 
-        if (type && !type.includes('application/json')) {
-          if (type.includes('application/zip')) {
-            const arrayBuffer = await response.arrayBuffer()
-            const data = Buffer.from(arrayBuffer)
-            return { data, status, headers }
-          }
-          const data = await response.text()
+export async function clientHandleSwitchboardBranch(headers: Record<string, string>): Promise<Record<string, string>> {
+  // Send the local mock overrides with all requests
+  if (!isWellKnownEnvironment() && isSSR) {
+    // Import cookies dynamically only in node environment to not trigger nextjs warnings
+    // TODO: Investigate the above. It means currently any client-side requests won't receive dynamically mocked responses
+    const { cookies } = await import('next/headers')
+    const cookieStore = await cookies()
+    const switchBoardCookie = cookieStore.get(UKHSA_SWITCHBOARD_COOKIE_NAME)
+    if (switchBoardCookie) {
+      headers.cookie = `${UKHSA_SWITCHBOARD_COOKIE_NAME}=${switchBoardCookie.value}`
+    }
+  }
+  return headers
+}
+
+export async function clientHandleAuthToken(headers: Record<string, string>): Promise<Record<string, string>> {
+  const cmsAuthToken = await getCookieValue('cmsAuthToken')
+
+  if (typeof cmsAuthToken === 'string' && cmsAuthToken !== 'unset' && cmsAuthToken !== '') {
+    headers['x-cms-auth'] = `Bearer ${cmsAuthToken}`
+  }
+
+  return headers
+}
+
+export async function clientHandlePreviewBranch(
+  endpoint: string,
+  headers: Record<string, string>,
+  customConfig: any,
+  path: string
+): Promise<{
+  endpoint: string
+  headers: Record<string, string>
+  customConfig: any
+}> {
+  if (!path?.startsWith('/preview')) {
+    return { endpoint, headers, customConfig }
+  }
+
+  const newEndpoint = endpoint.replace(/^pages/, 'drafts') // will fetch the draft version
+  const { headers: newHeaders, customConfig: newConfig } = setNoCache(headers, customConfig)
+
+  return {
+    endpoint: newEndpoint,
+    headers: newHeaders,
+    customConfig: newConfig,
+  }
+}
+
+export async function clientHandleNoCacheBranch(
+  headers: Record<string, string>,
+  customConfig: any,
+  path: string
+): Promise<{
+  headers: Record<string, string>
+  customConfig: any
+}> {
+  if (!path?.startsWith('/nocache')) {
+    return { headers, customConfig }
+  }
+
+  return setNoCache(headers, customConfig)
+}
+
+export function setNoCache(headers: Record<string, string>, customConfig: any): any {
+  return {
+    headers: {
+      ...headers,
+      'Cache-Control': 'no-store, no-cache, must-revalidate',
+    },
+    customConfig: {
+      ...customConfig,
+      cache: 'no-store',
+    },
+  }
+}
+
+export async function clientGetClientAccessToken(endpoint: string, isPublic: boolean): Promise<string | undefined> {
+  // read access token only if request is not public
+  // or if it's a pages endpoint, which currently also requires authentication
+  const isPagesEndpoint = endpoint.includes('pages')
+  const accessToken = isPagesEndpoint || isPublic === false ? await getAuthToken() : undefined
+  return accessToken
+}
+
+export function clientBuildApiUrl({
+  baseUrl,
+  endpoint,
+  searchParams,
+}: {
+  baseUrl?: string
+  endpoint?: string
+  searchParams?: URLSearchParams
+}) {
+  let url = baseUrl || ''
+  if (baseUrl && endpoint) {
+    if (!url.endsWith('/') && !endpoint.startsWith('/')) {
+      url += '/'
+    }
+    url += endpoint
+  } else if (endpoint) {
+    url = endpoint
+  }
+  if (searchParams) {
+    url += `?${searchParams.toString()}`
+  }
+  return url
+}
+
+async function handleApiResponse(response: Response) {
+  const { status, ok, headers } = response
+
+  if (ok) {
+    try {
+      const type = response.headers.get('Content-Type')
+
+      if (type && !type.includes('application/json')) {
+        if (type.includes('application/zip')) {
+          const arrayBuffer = await response.arrayBuffer()
+          const data = Buffer.from(arrayBuffer)
           return { data, status, headers }
         }
-        const data = await response.json()
+        const data = await response.text()
         return { data, status, headers }
-      } catch (_error) {
-        return Promise.reject(JSON.stringify(response))
       }
-    } else {
-      const error = new Error(response.statusText)
-      error.code = status
-      return Promise.reject(error)
+      const data = await response.json()
+      return { data, status, headers }
+    } catch (_error) {
+      return Promise.reject(JSON.stringify(response))
     }
+  } else {
+    const error = new Error(response.statusText)
+    // @ts-ignore
+    error.code = status
+    return Promise.reject(error)
+  }
+}
+
+/**
+ * Fetch client instance
+ * This is the fetch instance which all requests should be initiated from.
+ * It handles automatic retries, pae previews (drafts) and auth headers
+ */
+export async function client<T>(
+  endpoint: string,
+  { body, searchParams, baseUrl = getApiBaseUrl(), ...customConfig }: Options = {},
+  // Defaulting all requests to public (non-authenticated) for now.
+  isPublic: boolean = true
+): Promise<{ data: T | null; status: number; error?: Error; headers?: Headers }> {
+  let headers: Record<string, string> = {
+    Authorization: process.env.API_KEY ?? '',
+    'content-type': 'application/json',
+  }
+
+  const path = await getCookieValue('path')
+  const previewResult = await clientHandlePreviewBranch(endpoint, headers, customConfig, path)
+  endpoint = previewResult.endpoint
+  headers = previewResult.headers
+  customConfig = previewResult.customConfig
+
+  const noCacheResult = await clientHandleNoCacheBranch(headers, customConfig, path)
+  headers = noCacheResult.headers
+  customConfig = noCacheResult.customConfig
+
+  const accessToken = await clientGetClientAccessToken(endpoint, isPublic)
+
+  const switchResult = await clientHandleSwitchboardBranch(headers)
+  headers = switchResult
+
+  // All api calls get the auth token, if present
+  // The backend will be able to unpack this, validate it
+  // and set embargo time travel if OK
+  const authTokenResult = await clientHandleAuthToken(headers)
+  headers = authTokenResult
+
+  const fetchOptions = clientBuildFetchOptions({
+    body,
+    isPublic,
+    customConfig,
+    headers,
+    accessToken,
   })
+
+  const url = clientBuildApiUrl({ baseUrl, endpoint, searchParams })
+
+  return fetch(url, fetchOptions).then((response) => handleApiResponse(response))
 }

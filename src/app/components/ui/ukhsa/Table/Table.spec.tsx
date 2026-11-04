@@ -102,6 +102,8 @@ const mockData: ComponentProps<typeof Table>['data'] = {
     {
       type: 'plot',
       value: {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_daily',
         chart_type: 'line_with_shaded_section',
@@ -136,6 +138,15 @@ test('table with caption and headers', async () => {
   const headers = getAllByRole('columnheader')
   expect(headers[0]).toHaveTextContent('Date')
   expect(headers[1]).toHaveTextContent('Amount')
+})
+
+test('table renders date_prefix when provided', async () => {
+  const validDatePrefix = 'valid date prefix'
+  const updatedMockData = { ...mockData, date_prefix: validDatePrefix }
+
+  const { getByTestId } = render((await Table({ data: updatedMockData, size: mockSize })) as ReactElement)
+  const datePrefixElement = getByTestId('table-date-prefix')
+  expect(datePrefixElement).toHaveTextContent(validDatePrefix)
 })
 
 test('table with row data', async () => {
@@ -222,6 +233,8 @@ test('table by geography and geography type when both are present in the url sea
     {
       plots: [
         {
+          theme: 'infectious_disease',
+          sub_theme: 'respiratory',
           topic: 'COVID-19',
           metric: 'new_cases_daily',
           chart_type: 'line_with_shaded_section',

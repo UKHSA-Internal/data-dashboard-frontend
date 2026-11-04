@@ -19,6 +19,7 @@ import { useErrorData } from '@/app/hooks/globalFilterHooks'
 import createChartErrorMessage from '@/app/utils/error-utils'
 import { flattenGeographyObject, getGeographyColourSelection } from '@/app/utils/geography.utils'
 import { mapThresholdsToMetricValueRanges, MetricValueRange } from '@/app/utils/threshold.utils'
+import { chartSizes } from '@/config/constants'
 
 interface SubplotClientChartProps {
   selectedVaccinations: DataFilter[]
@@ -80,8 +81,8 @@ const SubplotClientChart = ({
             chart_parameters: {
               x_axis: 'geography',
               y_axis: 'metric',
-              theme: 'immunisation',
-              sub_theme: 'childhood_vaccines',
+              theme: selectedVaccinations[0]?.value.parameters.theme.value ?? '',
+              sub_theme: selectedVaccinations[0]?.value.parameters.sub_theme.value ?? '',
               date_from: timePeriods[currentTimePeriodIndex].value.date_from,
               date_to: timePeriods[currentTimePeriodIndex].value.date_to,
               age: 'all',
@@ -102,7 +103,7 @@ const SubplotClientChart = ({
                     label: geography.name,
                     geography_type: geography.geography_type,
                     geography: geography.name,
-                    line_colour: getGeographyColourSelection(geography.geography_type!, geographyFilters),
+                    line_colour: getGeographyColourSelection(geography.geography_type ?? '', geographyFilters),
                   }
                 }),
               }
@@ -132,6 +133,7 @@ const SubplotClientChart = ({
     }
 
     fetchCharts()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedVaccinations, selectedThresholds, geographyFilters, currentTimePeriodIndex])
 
   useEffect(() => {
@@ -141,7 +143,7 @@ const SubplotClientChart = ({
     if (!chartResponse) {
       handleLatestDate(null)
     }
-  }, [chartResponse])
+  }, [chartResponse, handleLatestDate])
 
   if (loading) {
     return (
@@ -176,7 +178,11 @@ const SubplotClientChart = ({
 
     return (
       <>
-        <ChartInteractiveWrapper fallbackUntilLoaded={<h2>loading</h2>} figure={{ frames: [], ...figure }} />
+        <ChartInteractiveWrapper
+          fallbackUntilLoaded={<h2>loading</h2>}
+          figure={{ frames: [], ...figure }}
+          chartHeight={chartSizes.narrow.height}
+        />
         <TimePeriodSelector
           timePeriods={timePeriods}
           currentTimePeriodIndex={currentTimePeriodIndex}

@@ -26,4 +26,12 @@ export class SwitchboardPage {
     await this.page.getByRole('button', { name: 'Save changes' }).click()
     await this.page.reload()
   }
+
+  async setTopicPageIsPublic(isPublic: boolean) {
+    await this.page.goto('/switchboard/pages')
+    await this.page.getByText('Topic page visibility').click()
+    await this.page.locator(`input[id="pages.detail.scenario.topicPageIsPublic.${isPublic}"]`).check()
+    await this.page.getByRole('button', { name: 'Save changes' }).click()
+    await this.page.reload()
+  }
 }

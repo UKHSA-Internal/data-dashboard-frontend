@@ -6,6 +6,10 @@ import { downloadsSubplotJsonFixture } from '@/mock-server/handlers/downloads/su
 
 import { getSubplotDownloads } from './getSubplotDownloads'
 
+jest.mock('@/auth', () => ({
+  auth: jest.fn(),
+}))
+
 const mockChartParameters = {
   theme: 'immunisation',
   sub_theme: 'childhood-vaccines',
@@ -38,12 +42,29 @@ const mockSubplots = [
   },
 ]
 
-jest.mock('@/auth', () => ({
-  auth: jest.fn(),
-}))
-
 const mockAuth = auth as unknown as jest.MockedFunction<() => Promise<{ userId: string | null } | null>>
 const mockAuditLog = auditLog as jest.MockedFunction<typeof auditLog>
+
+test('Uses default file_format and threshold params when omitted', async () => {
+  jest.mocked(client).mockResolvedValueOnce({
+    data: downloadsSubplotCsvFixture,
+    status: 200,
+  })
+
+  await getSubplotDownloads(true, undefined, undefined, undefined, mockChartParameters, mockSubplots)
+
+  expect(client).toHaveBeenCalledWith('downloads/subplot/v1', {
+    body: {
+      is_public: true,
+      file_format: 'csv',
+      target_threshold: null,
+      target_threshold_label: null,
+      chart_parameters: mockChartParameters,
+      subplots: mockSubplots,
+    },
+    headers: undefined,
+  })
+})
 
 test('Returns chart data in CSV format', async () => {
   jest.mocked(client).mockResolvedValueOnce({

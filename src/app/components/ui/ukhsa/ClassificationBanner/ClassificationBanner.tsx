@@ -34,8 +34,11 @@ const ClassificationBanner: FC<ClassificationBannerProps> = ({
   customContent,
   customColor,
 }) => {
+  const Wrapper = size === 'small' ? 'span' : 'div'
+  const Content = size === 'small' ? 'span' : 'p'
+
   return (
-    <div
+    <Wrapper
       className={clsx('govuk-classification-banner', {
         [customColor || levelColors[level]]: true,
         'my-3': size === 'large',
@@ -43,15 +46,17 @@ const ClassificationBanner: FC<ClassificationBannerProps> = ({
       role="note"
       aria-label={`${levelContent[level]} classification`}
     >
-      <p
+      <Content
+        // eslint-disable-next-line tailwindcss/no-custom-classname
         className={clsx('font-open-sans font-bold uppercase text-white', {
           'govuk-width-container text-[27px] py-2 ml-4': size === 'large',
           'py-1 !pl-[12px] text-[18px]': size === 'medium',
+          'inline-block py-1 px-2 text-[14px]': size === 'small',
         })}
       >
         {customContent || levelContent[level]}
-      </p>
-    </div>
+      </Content>
+    </Wrapper>
   )
 }
 export default ClassificationBanner

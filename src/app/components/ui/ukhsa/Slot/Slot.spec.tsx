@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 import { render } from '@/config/test-utils'
 
 import { Slot } from './Slot'

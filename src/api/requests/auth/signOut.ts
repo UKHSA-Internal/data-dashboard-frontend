@@ -39,8 +39,8 @@ export async function signOut(options?: { redirectRoute?: string; redirect?: tru
       body: new URLSearchParams({
         token: session.refreshToken,
         token_type_hint: 'refresh_token',
-        client_id: process.env.AUTH_CLIENT_ID!,
-        client_secret: process.env.AUTH_CLIENT_SECRET!,
+        client_id: process.env.AUTH_CLIENT_ID ?? '',
+        client_secret: process.env.AUTH_CLIENT_SECRET ?? '',
       }).toString(),
     })
 

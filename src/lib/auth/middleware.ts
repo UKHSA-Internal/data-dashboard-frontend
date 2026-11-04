@@ -8,7 +8,7 @@ import { encode } from 'next-auth/jwt'
 import { refreshAccessToken } from '@/api/requests/auth/refreshAccessToken'
 import { auditLog, logger } from '@/lib/logger'
 
-const AUTH_SECRET = process.env.AUTH_SECRET!
+const AUTH_SECRET = process.env.AUTH_SECRET ?? ''
 const SECURE_COOKIE = process.env.NEXTAUTH_URL?.startsWith('https://')
 const SESSION_COOKIE = SECURE_COOKIE ? '__Secure-authjs.session-token' : 'authjs.session-token'
 const TOKEN_REFRESH_BUFFER_SECONDS = 30

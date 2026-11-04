@@ -15,15 +15,15 @@ export function Slot({
 }: React.HTMLAttributes<HTMLElement> & {
   children?: React.ReactNode
 }) {
-  if (isValidElement(children)) {
+  if (isValidElement<React.HTMLAttributes<HTMLElement>>(children)) {
     return cloneElement(children, {
       ...props,
-      ...(children.props as any),
+      ...children.props,
       style: {
         ...props.style,
-        ...(children.props as any).style,
+        ...children.props.style,
       },
-      className: twMerge(props.className, (children.props as any).className),
+      className: twMerge(props.className, children.props.className),
     })
   }
   if (Children.count(children) > 1) {

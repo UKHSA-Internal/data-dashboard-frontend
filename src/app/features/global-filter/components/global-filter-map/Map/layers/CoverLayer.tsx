@@ -5,6 +5,7 @@
 
 'use client'
 
+import DOMPurify from 'isomorphic-dompurify'
 import Leaflet, { GeoJSONOptions, LeafletMouseEvent, Path, PathOptions } from 'leaflet'
 import { ComponentProps, useCallback, useEffect, useRef, useState } from 'react'
 import { GeoJSON, useMap, useMapEvents } from 'react-leaflet'
@@ -78,6 +79,9 @@ interface CustomLeafletEvent extends LeafletMouseEvent {
   }
 }
 
+const geoJsonFeatureId = 'CTYUA24CD' satisfies keyof LocalAuthoritiesFeature['properties']
+const regionGeoJsonFeatureId = 'RGN23CD' satisfies keyof RegionFeature['properties']
+
 interface LayerWithFeature extends Path {
   feature: LocalAuthoritiesFeature & RegionFeature & CountriesFeature
 }
@@ -146,7 +150,7 @@ const CoverLayer = <T extends LayerWithFeature>({
       return defaultResponse
     }
 
-    const vaccination = selectedVaccination!.value.label ?? 'Data Unavailable'
+    const vaccination = selectedVaccination?.value.label ?? 'Data Unavailable'
 
     const geographyDataArray = geographyAreas.get('Upper Tier Local Authority')
 
@@ -210,9 +214,6 @@ const CoverLayer = <T extends LayerWithFeature>({
     }
   }, [])
 
-  const geoJsonFeatureId = 'CTYUA24CD' satisfies keyof LocalAuthoritiesFeature['properties']
-  const regionGeoJsonFeatureId = 'RGN23CD' satisfies keyof RegionFeature['properties']
-
   useEffect(() => {
     if (selectedGeographyFilters && selectedGeographyFilters.length > 0) {
       // Get most recently selected geography
@@ -233,7 +234,7 @@ const CoverLayer = <T extends LayerWithFeature>({
         const latlng = Leaflet.latLng(matchingFeature.properties.LAT, matchingFeature.properties.LONG)
 
         // Set the selected feature first
-        setFilterSelectedFeatureId(latestGeography.geography_code!)
+        setFilterSelectedFeatureId(latestGeography.geography_code ?? '')
 
         // Then update the map view
         if (map.getZoom() < 8) {
@@ -304,7 +305,7 @@ const CoverLayer = <T extends LayerWithFeature>({
               label: `${featureData?.geography}`,
             }
             // pass in an optional param to remove the previously clicked one from the geographyFilters.
-            addFilterFromMap(selectedFeature, clickedFeatureIdRef!.current!)
+            addFilterFromMap(selectedFeature, clickedFeatureIdRef?.current ?? '')
           }
           // Store the clicked ref
           if (layer.feature.id) {
@@ -344,7 +345,7 @@ const CoverLayer = <T extends LayerWithFeature>({
               const { regionName, nationName, vaccination } = renderTooltip(currentFeatureId)
               activeTooltipLayerRef.current = layer
                 .bindTooltip(
-                  `
+                  DOMPurify.sanitize(`
                   <b>Country</b>: ${nationName}</br>
                   <b>Region name</b>: ${regionName}</br>
                   <b>Local Authority</b>: ${feature.properties['CTYUA24NM']}<br />
@@ -364,7 +365,7 @@ const CoverLayer = <T extends LayerWithFeature>({
                       <b>Region level of coverage</b>: No Data Available</br>
                       `
                   }
-                  `,
+                  `),
                   {
                     permanent: true, // This keeps it open while moving cursor
                     opacity: 1,

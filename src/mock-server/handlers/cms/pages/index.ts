@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 
 import { PagesResponse, PageType } from '@/api/requests/cms/getPages'
 import { getSwitchBoardState } from '@/app/(pages)/switchboard/shared/state'
+import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 import { logger } from '@/lib/logger'
 
 import { accessOurDataChildMocks, accessOurDataParentMock } from './fixtures/page/access-our-data'
@@ -50,7 +51,7 @@ export default async function handler(req: Request, res: Response) {
           list: { status },
         },
       },
-    } = getSwitchBoardState(req.headers.cookie)
+    } = getSwitchBoardState(req.cookies[UKHSA_SWITCHBOARD_COOKIE_NAME])
 
     // filter all items where requesting child of access our data parent
     if (req.query.child_of && Number(req.query.child_of) === accessOurDataParentMock.id) {
