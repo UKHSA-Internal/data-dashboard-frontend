@@ -50,16 +50,26 @@ export const requestSchema = z.object({
   ),
 })
 
+export type ChartResponse = z.infer<typeof responseSchema>
+
+export type RequestParams = z.infer<typeof requestSchema>
+
+const AxisConfigSchema = z.record(z.string(), z.union([z.number().int(), z.string(), z.object({}).passthrough()]))
+
+export const FigureConfigSchema = z.object({
+  xaxis_full: AxisConfigSchema.optional(),
+  xaxis_compact: AxisConfigSchema.optional(),
+})
+
 export const responseSchema = z.object({
   chart: z.string(),
   last_updated: z.string(),
   alt_text: z.string(),
   figure: ChartFigure,
+  figure_config: FigureConfigSchema.optional(),
 })
 
-export type ChartResponse = z.infer<typeof responseSchema>
-
-export type RequestParams = z.infer<typeof requestSchema>
+export type FigureConfig = z.infer<typeof FigureConfigSchema>
 
 export const getCharts = async (chart: RequestParams) => {
   const {
@@ -97,7 +107,6 @@ export const getCharts = async (chart: RequestParams) => {
 
   try {
     const path = isSSR ? `charts/v3` : `proxy/charts/v3`
-    // const publicParam = !isSSR && is_public === false ? '?isPublic=false' : ''
     const { data } = await client<z.infer<typeof responseSchema>>(`${path}`, { body }, is_public)
 
     const result = responseSchema.safeParse(data)

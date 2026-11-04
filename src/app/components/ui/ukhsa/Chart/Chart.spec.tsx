@@ -9,6 +9,16 @@ import { render } from '@/config/test-utils'
 
 import { Chart } from './Chart'
 
+const mockChartWithFilter = jest.fn()
+
+jest.mock('./ChartWithFilter', () => ({
+  __esModule: true,
+  default: (props: unknown) => {
+    mockChartWithFilter(props)
+    return <div data-testid="chart-with-filter" />
+  },
+}))
+
 // Mock the url utils
 const defaultUrl = new URL('http://localhost')
 
@@ -35,6 +45,7 @@ console.error = jest.fn()
 
 beforeEach(() => {
   getChartsMock.mockClear()
+  mockChartWithFilter.mockClear()
   jest.mocked(getSearchParams).mockClear()
   jest.mocked(useSearchParams).mockClear()
 })
@@ -124,6 +135,57 @@ test('renders a narrow chart correctly', async () => {
     'src',
     'data:image/svg+xml;utf8,mock-chart-narrow'
   )
+})
+
+test('passes figure config to a chart with a timeseries filter', async () => {
+  const originalApiUrl = process.env.API_URL
+  process.env.API_URL = 'http://localhost:8000'
+
+  const figureConfig = {
+    xasis_full: { nticks: 13 },
+    xaxis_compact: { nticks: 5 },
+  }
+
+  getChartsMock.mockResolvedValueOnce({
+    success: true,
+    data: {
+      chart: 'mock-chart-narrow',
+      alt_text: 'alt text for chart',
+      last_updated: '2023-05-10T15:18:06.939535+01:00',
+      figure: { data: [], layout: {} },
+      figure_config: figureConfig,
+    },
+  })
+
+  const data: ComponentProps<typeof Chart>['data'] = {
+    x_axis: 'date',
+    y_axis: 'metric',
+    show_timeseries_filter: true,
+    chart: [],
+    body: 'COVID-19 chart description.',
+    tag_manager_event_id: '',
+    date_prefix: 'Up to',
+    title: 'Filtered chart',
+    headline_number_columns: [],
+    about: '',
+  }
+
+  try {
+    render(
+      (await Chart({
+        data,
+        sizes: [{ default: true, size: 'narrow' }],
+      })) as ReactElement
+    )
+
+    expect(mockChartWithFilter).toHaveBeenCalledWith(
+      expect.objectContaining({
+        figureConfig,
+      })
+    )
+  } finally {
+    process.env.API_URL = originalApiUrl
+  }
 })
 
 test('renders the chart by geography and geography type when both are present in the url search params', async () => {
