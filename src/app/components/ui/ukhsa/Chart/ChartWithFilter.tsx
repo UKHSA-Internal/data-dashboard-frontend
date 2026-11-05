@@ -1,6 +1,7 @@
 'use client'
 
 import kebabCase from 'lodash/kebabCase'
+import { useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { ChartFigure } from '@/api/models/Chart'
@@ -8,7 +9,12 @@ import { ChartComponentData } from '@/api/models/cms/Page'
 import { DataClassification } from '@/api/models/DataClassification'
 import { FigureConfig } from '@/api/requests/charts/getCharts'
 import { TimeseriesFilterProvider, useTimeseriesFilter } from '@/app/hooks/useTimeseriesFilter'
-import { getFilteredChartResponseData, getTimespanFromChartData, isTimeseriesChartData } from '@/app/utils/chart.utils'
+import {
+  getFilteredChartResponseData,
+  getTimespanFromChartData,
+  isTimeseriesChartData,
+  withGeographyOverride,
+} from '@/app/utils/chart.utils'
 
 import { ChartNoScript } from '../ChartNoScript/ChartNoScript'
 import ClientInformationCard from '../ClientInformationCard/ClientInformationCard'
@@ -53,8 +59,12 @@ const ChartWithFilterContent = ({
   const [isLoading, setIsLoading] = useState(false)
   const [hasError, setHasError] = useState(false)
   const previousFilterRef = useRef<string>(currentFilter)
-  const isFirstRender = useRef<boolean>(true)
   const hasInitialized = useRef<boolean>(false)
+
+  // grab area selector options
+  const searchParams = useSearchParams()
+  const areaType = searchParams.get('areaType')
+  const areaName = searchParams.get('areaName')
 
   const fetchFilteredChart = useCallback(
     async (filter: string) => {
@@ -63,7 +73,7 @@ const ChartWithFilterContent = ({
 
       try {
         const chartResponse = await getFilteredChartResponseData(
-          chartData,
+          withGeographyOverride(chartData, areaType, areaName),
           filter,
           lastUpdated,
           isPublic,
@@ -88,22 +98,14 @@ const ChartWithFilterContent = ({
         previousFilterRef.current = filter
       }
     },
-    [chartData, dataClassification, isPublic, lastUpdated]
+    [chartData, dataClassification, isPublic, lastUpdated, areaType, areaName]
   )
 
+  // tracks the previous fetchFilteredChart identity so we can detect when any of its
+  // dependencies (e.g. area selector params) changed, without listing them individually
+  const previousFetchRef = useRef<typeof fetchFilteredChart>(fetchFilteredChart)
+
   useEffect(() => {
-    if (isFirstRender.current) {
-      // Skip refetch on the first render, we already have initial data
-      isFirstRender.current = false
-      previousFilterRef.current = currentFilter
-      return
-    }
-
-    // Skip if filter hasn't changed
-    if (currentFilter === previousFilterRef.current) {
-      return
-    }
-
     // On initial mount: if filter is not 'all', fetch the filtered chart
     if (!hasInitialized.current) {
       hasInitialized.current = true
@@ -115,6 +117,12 @@ const ChartWithFilterContent = ({
       return
     }
 
+    // if nothing has changed, escape
+    if (currentFilter === previousFilterRef.current && fetchFilteredChart === previousFetchRef.current) {
+      return
+    }
+
+    // otherwise, update the chart
     fetchFilteredChart(currentFilter)
   }, [currentFilter, fetchFilteredChart])
 
