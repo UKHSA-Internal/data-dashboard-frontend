@@ -50,8 +50,9 @@ export default async function TopicPage({
     active_announcements: activeAnnouncements,
     is_public: isPublic,
     page_classification: pageClassification,
+    theme_name: pageTheme,
+    sub_theme_name: pageSubTheme,
   } = await getPageBySlug<PageType.Topic>(slug, { type: PageType.Topic })
-
   let extractedGlobalFilterContent = {} as ExtractedFilters
   let extractedSubplotData = {} as FilterLinkedSubplotData
   let extractedTimeSeriesData = {} as FilterLinkedTimeSeriesData
@@ -107,12 +108,23 @@ export default async function TopicPage({
                     label={t('areaSelector.detailsLabel')}
                     className="govuk-!-margin-top-6 govuk-!-margin-bottom-6"
                   >
-                    <AreaSelector areaType={areaType} selectedTopics={selectedTopics} isPublic={isPublic} />
+                    <AreaSelector
+                      areaType={areaType}
+                      selectedTopics={selectedTopics}
+                      isPublic={isPublic}
+                      theme={pageTheme}
+                      sub_theme={pageSubTheme}
+                    />
                   </Details>
                 </>
               )}
 
-              <GlobalFilterProvider filters={extractedGlobalFilterContent} isPublic={isPublic}>
+              <GlobalFilterProvider
+                filters={extractedGlobalFilterContent}
+                isPublic={isPublic}
+                theme={pageTheme}
+                sub_theme={pageSubTheme}
+              >
                 <PageSectionWithContents>
                   {body.map(({ id, value }) =>
                     value.content.some((content) => content.type === 'global_filter_card') ? (
