@@ -1,6 +1,7 @@
 import type { Page } from '@playwright/test'
 
 import { flags } from '@/app/constants/flags.constants'
+import { ACKNOWLEDGEMENT_STORAGE_KEY } from '@/app/utils/acknowledgement.utils'
 
 type Flag = keyof typeof flags
 type FlagStatus = 'Enabled' | 'Disabled'
@@ -13,7 +14,23 @@ export class SwitchboardPage {
     this.page = page
   }
 
+  async seedAcknowledgementMarker() {
+    await this.page.addInitScript(
+      ({ key, value }) => {
+        window.localStorage.setItem(key, value)
+      },
+      {
+        key: ACKNOWLEDGEMENT_STORAGE_KEY,
+        value: JSON.stringify({
+          accepted: true,
+          acceptedAt: new Date().toISOString(),
+        }),
+      }
+    )
+  }
+
   async setFeatureFlag(flag: Flag, status: FlagStatus) {
+    await this.seedAcknowledgementMarker()
     await this.page.goto('/switchboard/feature-flags')
     await this.page.click(`input[id="flags.${flag}.${status}"]`)
     await this.page.getByRole('button', { name: 'Save changes' }).click()
@@ -21,6 +38,7 @@ export class SwitchboardPage {
   }
 
   async setMenus(status: MenuStatus) {
+    await this.seedAcknowledgementMarker()
     await this.page.goto('/switchboard/menus')
     await this.page.click(`input[id="menus.scenario.${status}"]`)
     await this.page.getByRole('button', { name: 'Save changes' }).click()
@@ -28,6 +46,7 @@ export class SwitchboardPage {
   }
 
   async setTopicPageIsPublic(isPublic: boolean) {
+    await this.seedAcknowledgementMarker()
     await this.page.goto('/switchboard/pages')
     await this.page.getByText('Topic page visibility').click()
     await this.page.locator(`input[id="pages.detail.scenario.topicPageIsPublic.${isPublic}"]`).check()

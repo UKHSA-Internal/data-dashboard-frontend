@@ -4,6 +4,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { serverSignOut } from '@/app/api/auth/auth.actions'
+import { clearAcknowledgementMarker } from '@/app/utils/acknowledgement.utils'
 import { logoutThresholdMinutes, logoutWarningThresholdMinutes } from '@/config/constants'
 interface LogoutWarningProps {
   timeoutMinutes?: number
@@ -34,6 +35,7 @@ export default function LogoutWarning({
 
   const triggerLogout = useCallback(async () => {
     clearTimers()
+    clearAcknowledgementMarker()
     serverSignOut('/logged-out')
   }, [clearTimers])
 
