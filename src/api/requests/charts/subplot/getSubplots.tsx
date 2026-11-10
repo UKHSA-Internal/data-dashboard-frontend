@@ -70,6 +70,7 @@ export const responseSchema = z.object({
 })
 
 export type RequestParams = z.infer<typeof requestSchema>
+export type SubplotChartResponse = z.infer<typeof responseSchema>
 
 export const getSubplots = async (chart: RequestParams, isPublic?: boolean) => {
   const {
