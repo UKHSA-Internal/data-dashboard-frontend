@@ -4,12 +4,23 @@ import { z } from 'zod'
 import { ChartFigure } from '@/api/models/Chart'
 import { Chart, SingleCategoryChartCardValue } from '@/api/models/cms/Page'
 import { FigureConfig } from '@/api/requests/charts/getCharts'
-import { getFilteredChartResponseData, getTimespanFromChartData, isTimeseriesChartData } from '@/app/utils/chart.utils'
+import {
+  getFilteredChartResponseData,
+  getTimespanFromChartData,
+  isTimeseriesChartData,
+  withGeographyOverride,
+} from '@/app/utils/chart.utils'
 import { act, render, screen, waitFor } from '@/config/test-utils'
 
 import ChartWithFilter from './ChartWithFilter'
 
 jest.mock('@/app/utils/chart.utils')
+
+const defaultUrl = new URL('http://localhost')
+jest.mock('next/navigation', () => ({
+  ...jest.requireActual('next/navigation'),
+  useSearchParams: jest.fn(() => defaultUrl.searchParams),
+}))
 
 let setFilterRef: ((value: string) => void) | null = null
 let initialFilterRef = 'all'
@@ -107,6 +118,7 @@ const mockGetFilteredChartResponseData = getFilteredChartResponseData as jest.Mo
   typeof getFilteredChartResponseData
 >
 const mockIsTimeseriesChartData = isTimeseriesChartData as jest.MockedFunction<typeof isTimeseriesChartData>
+const mockWithGeographyOverride = withGeographyOverride as jest.MockedFunction<typeof withGeographyOverride>
 
 describe('ChartWithFilter', () => {
   const mockFigure: ChartFigure = {
@@ -154,6 +166,7 @@ describe('ChartWithFilter', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
+    defaultUrl.search = ''
     console.log = jest.fn()
     console.error = jest.fn()
     setTimeseriesInitialFilterForTests('all')
@@ -161,6 +174,7 @@ describe('ChartWithFilter', () => {
     // Default mocks
     mockIsTimeseriesChartData.mockReturnValue(true)
     mockGetTimespanFromChartData.mockReturnValue({ years: 1, months: 0 })
+    mockWithGeographyOverride.mockImplementation((data) => data)
     mockGetFilteredChartResponseData.mockResolvedValue({
       success: true,
       data: {
@@ -462,6 +476,79 @@ describe('ChartWithFilter', () => {
           true,
           undefined
         )
+      })
+    })
+
+    it('fetches when area selector params change', async () => {
+      const { rerender } = render(
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          chartHeight={260}
+        />
+      )
+
+      // Wait a bit to ensure no fetch happens
+      await act(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 100))
+      })
+
+      expect(mockGetFilteredChartResponseData).not.toHaveBeenCalled()
+
+      await act(async () => {
+        defaultUrl.search = '?areaType=AREA_TYPE&areaName=AREA_NAME'
+        rerender(
+          <ChartWithFilter
+            figure={mockFigure}
+            title="Test Chart"
+            chartData={mockChartData}
+            lastUpdated="2025-05-21"
+            chartHeight={260}
+          />
+        )
+      })
+
+      await waitFor(() => {
+        expect(mockGetFilteredChartResponseData).toHaveBeenCalled()
+        expect(mockWithGeographyOverride).toHaveBeenCalledWith(mockChartData, 'AREA_TYPE', 'AREA_NAME')
+      })
+    })
+
+    it('does not fetch when other params change', async () => {
+      const { rerender } = render(
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          chartHeight={260}
+        />
+      )
+
+      // Wait a bit to ensure no fetch happens
+      await act(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 100))
+      })
+
+      expect(mockGetFilteredChartResponseData).not.toHaveBeenCalled()
+
+      await act(async () => {
+        defaultUrl.search = '?another=beans'
+        rerender(
+          <ChartWithFilter
+            figure={mockFigure}
+            title="Test Chart"
+            chartData={mockChartData}
+            lastUpdated="2025-05-21"
+            chartHeight={260}
+          />
+        )
+      })
+
+      await waitFor(() => {
+        expect(mockGetFilteredChartResponseData).not.toHaveBeenCalled()
       })
     })
   })

@@ -195,6 +195,53 @@ export const getFilteredDualCategoryData = (
 export const isDualCategoryChartCardValue = (data: ChartComponentData): data is DualCategoryChartCardValue =>
   'segments' in data && 'static_fields' in data
 
+/**
+ * Returns a copy of the chart data with the geography fields overridden by the
+ * supplied area, leaving the original data untouched.
+ *
+ * If areaType and areaName aren't both provided then the original data is
+ * returned unaltered.
+ *
+ * Handles both single and dual category charts.
+ *
+ * @param data - the chart data
+ * @param areaType - the area type value
+ * @param areaName - the area name value
+ */
+export const withGeographyOverride = <T extends ChartComponentData>(
+  data: T,
+  areaType: string | null,
+  areaName: string | null
+): T => {
+  // early out if either area param is missing
+  if (!areaType || !areaName) {
+    return data
+  }
+
+  if (isDualCategoryChartCardValue(data)) {
+    return {
+      ...data,
+      static_fields: {
+        ...data.static_fields,
+        geography_type: areaType ?? data.static_fields.geography_type,
+        geography: areaName ?? data.static_fields.geography,
+      },
+    }
+  }
+
+  return {
+    ...data,
+    chart: data.chart.map((plot) => ({
+      ...plot,
+      value: {
+        ...plot.value,
+        geography_type: areaType ?? plot.value.geography_type,
+        geography: areaName ?? plot.value.geography,
+      },
+    })),
+  }
+}
+
 export const isTimeseriesChartData = (data: ChartComponentData): boolean => {
   if (isDualCategoryChartCardValue(data)) {
     return data.x_axis === 'date' || data.x_axis === null
