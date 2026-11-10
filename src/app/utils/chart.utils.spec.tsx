@@ -17,6 +17,7 @@ import {
   getTimespanFromChartData,
   isTimeseriesChartData,
   parseDualCategoryTableData,
+  withGeographyOverride,
 } from './chart.utils'
 
 jest.mock('@/api/requests/charts/getCharts')
@@ -1072,5 +1073,100 @@ describe('dualCategoryChartToDownloadChart', () => {
     expect(result[0].value.geography_type).toBe('Nation')
     expect(result[0].value.date_from).toBe('2023-01-01')
     expect(result[0].value.date_to).toBe('2025-01-01')
+  })
+})
+
+describe('withGeographyOverride', () => {
+  const dualMockData = {
+    chart_type: 'stacked_bar',
+    static_fields: {
+      topic: 'COVID-19',
+      metric: 'COVID-19_cases_casesByDay',
+      geography_type: 'Nation',
+      geography: 'England',
+      stratum: 'default',
+      sex: null,
+      age: 'all',
+      date_from: '2023-01-01',
+      date_to: '2025-01-01',
+    },
+    primary_field_values: ['a'],
+    secondary_category: 'age',
+    segments: [{ value: { secondary_field_value: '0-4' } }],
+    x_axis: 'date',
+    y_axis: 'metric',
+  } as DualCategoryChartCardValue
+
+  const mockData = {
+    title: 'Test Chart',
+    tag_manager_event_id: 'test-event',
+    x_axis: 'Date',
+    y_axis: 'Value',
+    sub_title: 'Test Chart',
+    topic_page: 'test-page',
+    show_timeseries_filter: true,
+    chart: [
+      {
+        id: 'chart1',
+        type: 'plot' as const,
+        value: {
+          theme: 'test',
+          sub_theme: 'test',
+          topic: 'test',
+          metric: 'test',
+          geography: 'test',
+          geography_type: 'test',
+          chart_type: 'test',
+          date_from: '2023-01-01',
+          date_to: '2024-01-01',
+        },
+      },
+      {
+        id: 'chart2',
+        type: 'plot' as const,
+        value: {
+          theme: 'test',
+          sub_theme: 'test',
+          topic: 'test',
+          metric: 'test',
+          geography: 'test',
+          geography_type: 'test',
+          chart_type: 'test',
+          date_from: '2023-01-01',
+          date_to: '2024-01-01',
+        },
+      },
+    ],
+  } as SingleCategoryChartCardValue
+
+  test('does nothing when no overrides are provided', () => {
+    const result = withGeographyOverride(dualMockData, null, null)
+    expect(result).toBe(dualMockData)
+  })
+
+  test("does nothing when areaType isn't provided", () => {
+    const result = withGeographyOverride(dualMockData, null, 'England')
+    expect(result).toBe(dualMockData)
+  })
+
+  test("does nothing when areaName isn't provided", () => {
+    const result = withGeographyOverride(dualMockData, 'Nation', null)
+    expect(result).toBe(dualMockData)
+  })
+
+  test('returns a copy of the chart data with geography fields overridden for dual category charts', () => {
+    const result = withGeographyOverride(dualMockData, 'UKHSA Region', 'London')
+    expect(result).not.toBe(dualMockData)
+    expect(result.static_fields.geography_type).toBe('UKHSA Region')
+    expect(result.static_fields.geography).toBe('London')
+  })
+
+  test('returns a copy of the chart data with geography fields overridden for single category charts', () => {
+    const result = withGeographyOverride(mockData, 'UKHSA Region', 'London')
+    expect(result).not.toBe(mockData)
+    expect(result.chart[0].value.geography_type).toBe('UKHSA Region')
+    expect(result.chart[0].value.geography).toBe('London')
+    expect(result.chart[1].value.geography_type).toBe('UKHSA Region')
+    expect(result.chart[1].value.geography).toBe('London')
   })
 })
