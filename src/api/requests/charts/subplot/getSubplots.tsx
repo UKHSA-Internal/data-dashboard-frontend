@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 import { ChartFigure } from '@/api/models/Chart'
+import { FigureConfigSchema } from '@/api/requests/charts/getCharts'
 import { client } from '@/api/utils/api.utils'
 import { isSSR } from '@/app/utils/app.utils'
 import { logger } from '@/lib/logger'
@@ -65,9 +66,11 @@ export const responseSchema = z.object({
   last_updated: z.string(),
   alt_text: z.string(),
   figure: ChartFigure,
+  figure_config: FigureConfigSchema.optional(),
 })
 
 export type RequestParams = z.infer<typeof requestSchema>
+export type SubplotChartResponse = z.infer<typeof responseSchema>
 
 export const getSubplots = async (chart: RequestParams, isPublic?: boolean) => {
   const {

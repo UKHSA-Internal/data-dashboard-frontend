@@ -1,8 +1,7 @@
 import { waitFor } from '@testing-library/dom'
 
 import { DataFilter, FilterLinkedSubplotData } from '@/api/models/cms/Page/GlobalFilter'
-import { ChartResponse } from '@/api/requests/charts/getCharts'
-import { getSubplots } from '@/api/requests/charts/subplot/getSubplots'
+import { getSubplots, SubplotChartResponse } from '@/api/requests/charts/subplot/getSubplots'
 import { useErrorData } from '@/app/hooks/globalFilterHooks'
 import { flattenGeographyObject, getGeographyColourSelection } from '@/app/utils/geography.utils'
 import { mapThresholdsToMetricValueRanges } from '@/app/utils/threshold.utils'
@@ -54,8 +53,10 @@ const mockMapThresholdsToMetricValueRanges = mapThresholdsToMetricValueRanges as
 // Mock ChartInteractive
 jest.mock('@/app/components/cms/ChartInteractive/ChartInteractive', () => ({
   __esModule: true,
-  default: ({ figure }: any) => (
-    <div data-testid="chart-interactive">Chart Interactive: {figure?.layout?.title || 'No title'}</div>
+  default: ({ figure, figureConfig }: any) => (
+    <div data-testid="chart-interactive" data-figure-config={JSON.stringify(figureConfig)}>
+      Chart Interactive: {figure?.layout?.title || 'No title'}
+    </div>
   ),
 }))
 
@@ -91,7 +92,7 @@ const mockCardData: FilterLinkedSubplotData = {
   about: 'About coverage data',
 }
 
-const mockChartResponse: ChartResponse = {
+const mockChartResponse: SubplotChartResponse = {
   chart: 'mock-svg-string',
   last_updated: '2024-03-31',
   alt_text: 'Mock alt text',
@@ -109,6 +110,14 @@ const mockChartResponse: ChartResponse = {
       title: 'Coverage Chart',
       xaxis: { anchor: 'y', domain: [0, 1] },
       yaxis: { anchor: 'x', domain: [0, 1] },
+    },
+  },
+  figure_config: {
+    full: { data: [{}], layout: {} },
+    compact: { data: [{}], layout: {} },
+    compact_rotated: {
+      data: [{ orientation: 'h' }],
+      layout: { height: 400 },
     },
   },
 }
@@ -189,6 +198,10 @@ describe('SubplotClientChart', () => {
 
     await waitFor(() => {
       expect(screen.getByTestId('chart-interactive')).toBeInTheDocument()
+      expect(screen.getByTestId('chart-interactive')).toHaveAttribute(
+        'data-figure-config',
+        JSON.stringify(mockChartResponse.figure_config)
+      )
       expect(screen.getByTestId('time-period-selector')).toBeInTheDocument()
     })
   })
