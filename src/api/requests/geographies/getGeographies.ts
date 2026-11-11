@@ -48,9 +48,9 @@ export const getGeographies = async (
   try {
     // Only append isPublic param when explicitly false (non-public pages)
     // undefined or true = public page, no need to pass JWT
-    let publicParam = !isSSR && isPublic === false ? '&isPublic=false' : ''
+    let extraQueryParams = !isSSR && isPublic === false ? '&isPublic=false' : ''
     if (isPublic === false && theme && sub_theme) {
-      publicParam += `&theme=${theme}&sub_theme=${sub_theme}`
+      extraQueryParams += `&theme=${theme}&sub_theme=${sub_theme}`
     }
     const path = isSSR ? `geographies/v3` : `proxy/geographies/v3`
     if (params.topic && params.geography_type) {
@@ -59,12 +59,12 @@ export const getGeographies = async (
     if (params.topic) {
       try {
         const { data } = await client<z.infer<typeof responseSchema>>(
-          `${path}?topic=${params.topic}${publicParam}`,
+          `${path}?topic=${params.topic}${extraQueryParams}`,
           {},
           isPublic
         )
-
         const result = responseSchema.safeParse(data)
+
         if (result.success) {
           return result
         } else {
@@ -79,7 +79,7 @@ export const getGeographies = async (
     if (params.geography_type) {
       try {
         const { data } = await client<z.infer<typeof responseSchema>>(
-          `${path}?geography_type=${params.geography_type}${publicParam}`,
+          `${path}?geography_type=${params.geography_type}${extraQueryParams}`,
           {},
           isPublic
         )

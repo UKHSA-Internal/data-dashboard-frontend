@@ -50,8 +50,8 @@ export default async function TopicPage({
     active_announcements: activeAnnouncements,
     is_public: isPublic,
     page_classification: pageClassification,
-    theme_name: pageTheme,
-    sub_theme_name: pageSubTheme,
+    selected_theme: pageTheme,
+    selected_sub_theme: pageSubTheme,
   } = await getPageBySlug<PageType.Topic>(slug, { type: PageType.Topic })
   let extractedGlobalFilterContent = {} as ExtractedFilters
   let extractedSubplotData = {} as FilterLinkedSubplotData
