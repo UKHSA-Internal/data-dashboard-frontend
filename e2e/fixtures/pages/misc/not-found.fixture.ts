@@ -28,7 +28,7 @@ export class NotFoundPage {
 
     // Check that there is one document title with the correct 404 text.
     await expect(this.page.locator('head > title')).toHaveCount(1)
-    await expect(this.page).toHaveTitle('Page Not Found | UKHSA Data Dashboard')
+    await expect(this.page).toHaveTitle('Page not found | UKHSA data dashboard')
   }
 
   async clickReturnToHome() {
