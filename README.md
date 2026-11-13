@@ -20,7 +20,7 @@ Welcome to the UKHSA Data Dashboard Frontend. This project is built with [Next.j
 
 Before you begin, ensure you have the following installed:
 
-- Node.js version 22.13.1 or later
+- Node.js version 22.23.4 or later
 
 ## Getting Started
 
@@ -120,7 +120,7 @@ Use `npm run test:e2e:smoke:ui` to run smoke tests in Playwright UI mode.
 
 ### Running auth and non-public tests
 
-Tests tagged `@auth-ui` and `@non-public` only run meaningful assertions when `AUTH_ENABLED=true`. 
+Tests tagged `@auth-ui` and `@non-public` only run meaningful assertions when `AUTH_ENABLED=true`.
 These tests use a mocked auth session, so they do not require real Playwright user credentials, but they do require auth environment variables to create the session cookie:
 
 #### Copy the auth test env file
@@ -156,6 +156,7 @@ MOCK_SESSION_USERNAME=Test User
 `MOCK_SESSION_USERNAME` is optional and defaults to `Test User`.
 
 #### Local setup for auth and non-public tests
+
 Start the mock API server:
 
 ```bash
@@ -187,7 +188,6 @@ npx playwright test --grep @non-public
 ```
 
 **Note:** When running Playwright locally for the first time, use `--workers=1`. The Next.js development server compiles pages on first access and parallel workers can cause avoidable timeouts during local execution.
-
 
 ### Test tags
 
