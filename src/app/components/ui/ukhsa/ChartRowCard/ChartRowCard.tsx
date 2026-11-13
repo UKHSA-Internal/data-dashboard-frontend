@@ -3,12 +3,13 @@ import { useSearchParams } from 'next/navigation'
 import { ReactNode, useEffect, useRef } from 'react'
 import { useDebounceValue, useWindowSize } from 'usehooks-ts'
 
+import { singleColumnLayoutBreakpoint } from '@/config/constants'
+
 interface ChartRowCardProps {
   children: ReactNode
   testId?: string
 }
 
-const DESKTOP_BREAKPOINT = 1024
 const DEBOUNCE_MILLISECONDS = 20
 
 const setChartCardHeaderSize = (row: HTMLDivElement | null, width: number) => {
@@ -38,7 +39,7 @@ const setChartCardHeaderSize = (row: HTMLDivElement | null, width: number) => {
 
   // set largest height to each card article header
   for (const header of headers) {
-    if (width >= DESKTOP_BREAKPOINT) {
+    if (width >= singleColumnLayoutBreakpoint) {
       ;(header as HTMLElement).style.minHeight = `${largestHeader}px`
     }
   }
