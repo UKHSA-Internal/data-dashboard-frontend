@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
+import { DataClassification } from '@/api/models'
 import { ChartLineColours } from '@/api/models/Chart'
-import { DataClassification } from '@/api/models/DataClassification'
 import { fallback } from '@/api/utils/zod.utils'
 
 import { HealthAlertTypes } from '../../Alerts'
