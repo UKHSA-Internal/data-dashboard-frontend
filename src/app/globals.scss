@@ -137,13 +137,13 @@ $govuk-font-family: var(--font-primary), arial, sans-serif;
   --colour-green-darkest: #{govuk-shade(govuk-colour('green'), 45%)};
 
   // UKHSA New yellow for maps
-  --colour-custard: #f1bf0d;
-  --colour-custard-dark: #{govuk-shade(#f1bf0d, 15%)};
-  --colour-custard-darkest: #{govuk-shade(#f1bf0d, 45%)};
+  --colour-custard: #FEE81A;
+  --colour-custard-dark: #{govuk-shade(#FEE81A, 15%)};
+  --colour-custard-darkest: #{govuk-shade(#FEE81A, 45%)};
 
   // UKHSA Alert banner colours
   --colour-green-opaque: #c2ddd0;
-  --colour-yellow-opaque: #fbefc2;
+  --colour-yellow-opaque: #fffbdb;
   --colour-orange-opaque: #fcdecf;
   --colour-red-opaque: #f5cfc9;
 
