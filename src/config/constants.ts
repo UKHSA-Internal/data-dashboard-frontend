@@ -89,6 +89,11 @@ export const chartSizes = {
 } as const
 
 /**
+ * The viewport width at which chart rows change from one column to two
+ */
+export const singleColumnLayoutBreakpoint = 1024
+
+/**
  * The default file format in which charts are displayed as
  */
 export const chartFormat = 'svg'

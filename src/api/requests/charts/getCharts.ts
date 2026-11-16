@@ -54,11 +54,31 @@ export type ChartResponse = z.infer<typeof responseSchema>
 
 export type RequestParams = z.infer<typeof requestSchema>
 
-const AxisConfigSchema = z.record(z.string(), z.union([z.number().int(), z.string(), z.object({}).passthrough()]))
+const FigureLayoutSchema = z
+  .object({
+    height: z.number().positive().optional(),
+  })
+  .passthrough()
 
 export const FigureConfigSchema = z.object({
-  xaxis_full: AxisConfigSchema.optional(),
-  xaxis_compact: AxisConfigSchema.optional(),
+  full: z
+    .object({
+      data: z.array(z.object({}).passthrough()),
+      layout: FigureLayoutSchema,
+    })
+    .passthrough(),
+  compact: z
+    .object({
+      data: z.array(z.object({}).passthrough()),
+      layout: FigureLayoutSchema,
+    })
+    .passthrough(),
+  compact_rotated: z
+    .object({
+      data: z.array(z.object({}).passthrough()),
+      layout: FigureLayoutSchema,
+    })
+    .passthrough(),
 })
 
 export const responseSchema = z.object({
