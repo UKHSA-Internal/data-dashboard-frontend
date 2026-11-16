@@ -9,8 +9,7 @@ import {
   ThresholdFilter,
   TimePeriod,
 } from '@/api/models/cms/Page/GlobalFilter'
-import { ChartResponse } from '@/api/requests/charts/getCharts'
-import { getSubplots } from '@/api/requests/charts/subplot/getSubplots'
+import { getSubplots, SubplotChartResponse } from '@/api/requests/charts/subplot/getSubplots'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import ChartInteractiveWrapper from '@/app/components/cms/ChartInteractive/ChartInteractiveWrapper'
 import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
@@ -48,7 +47,7 @@ const SubplotClientChart = ({
   timePeriodTitle,
   isPublic,
 }: SubplotClientChartProps) => {
-  const [chartResponse, setChartResponse] = useState<ChartResponse | null>(null)
+  const [chartResponse, setChartResponse] = useState<SubplotChartResponse | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const { setChartRequestErrors, removeChartRequestError } = useErrorData()
@@ -174,7 +173,7 @@ const SubplotClientChart = ({
   }
 
   if (chartResponse) {
-    const { figure } = chartResponse
+    const { figure, figure_config } = chartResponse
 
     return (
       <>
@@ -182,6 +181,7 @@ const SubplotClientChart = ({
           fallbackUntilLoaded={<h2>loading</h2>}
           figure={{ frames: [], ...figure }}
           chartHeight={chartSizes.narrow.height}
+          figureConfig={figure_config}
         />
         <TimePeriodSelector
           timePeriods={timePeriods}
