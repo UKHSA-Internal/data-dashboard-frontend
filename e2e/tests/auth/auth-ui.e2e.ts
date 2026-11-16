@@ -1,3 +1,5 @@
+import { ACKNOWLEDGEMENT_STORAGE_KEY } from '@/app/utils/acknowledgement.utils'
+
 import { expect, test } from '../../fixtures/app.fixture'
 
 test.describe(' Start page - when auth is disabled', () => {
@@ -42,14 +44,13 @@ test.describe('Start page - logged out (normal initial state) @auth-ui', () => {
 test.describe('Authentication-only page metadata @auth-ui', () => {
   test.use({ startLoggedOut: true })
 
-  const authenticationOnlyPages = [
+  const loggedOutAuthenticationOnlyPages = [
     { path: '/start', heading: 'Sign in to the UKHSA data dashboard' },
-    { path: '/acknowledgement', heading: 'Acknowledgement' },
     { path: '/authentication-error', heading: 'Failed to sign in' },
     { path: '/logged-out', heading: 'Logged out' },
   ]
 
-  for (const { path, heading } of authenticationOnlyPages) {
+  for (const { path, heading } of loggedOutAuthenticationOnlyPages) {
     test(`${path} has noindex, nofollow metadata`, async ({ app, authEnabled }) => {
       // Reason: All tests here are only relevant when auth has been enabled
       test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
@@ -62,10 +63,25 @@ test.describe('Authentication-only page metadata @auth-ui', () => {
   }
 })
 
+test('Acknowledgement page has noindex, nofollow metadata @auth-ui', async ({ app, page, authEnabled }) => {
+  // Reason: The acknowledgement page is only available to authenticated users who have not yet accepted
+  test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
+  await page.evaluate((key) => window.localStorage.removeItem(key), ACKNOWLEDGEMENT_STORAGE_KEY)
+
+  await app.goto('/acknowledgement')
+  await app.hasHeading('Acknowledgement')
+
+  await app.hasRobotsMetadata('noindex, nofollow')
+})
+
 test.describe('Public and non-public page metadata @auth-ui', () => {
-  test('Public-only pages do not have robots metadata', async ({ app, authEnabled }) => {
+  test('Public-only pages do not have robots metadata', async ({ app, page, authEnabled }) => {
     // Reason: All tests here are only relevant when auth has been enabled
     test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
+    await page.evaluate(({ key, value }) => window.localStorage.setItem(key, value), {
+      key: ACKNOWLEDGEMENT_STORAGE_KEY,
+      value: JSON.stringify({ accepted: true, acceptedAt: new Date().toISOString() }),
+    })
 
     const publicPages = [
       { path: '/', title: 'UKHSA data dashboard' },
@@ -179,6 +195,10 @@ test.describe('Start page - logged in @auth-ui', () => {
     // Reason: All tests here are only relevant when auth has been enabled
     test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
     await page.clock.install()
+    await page.evaluate(({ key, value }) => window.localStorage.setItem(key, value), {
+      key: ACKNOWLEDGEMENT_STORAGE_KEY,
+      value: JSON.stringify({ accepted: true, acceptedAt: new Date().toISOString() }),
+    })
     await landingPage.goto()
     await page.waitForFunction(() => localStorage.getItem('lastActivity') !== null)
 
@@ -187,6 +207,9 @@ test.describe('Start page - logged in @auth-ui', () => {
     await expect(page).toHaveURL(/\/logged-out\/?$/, { timeout: 15000 })
     await expect(page.getByRole('heading', { name: 'Logged out' })).toBeVisible()
     await expect(page.getByText('You have been automatically signed out')).toBeVisible()
+    await expect
+      .poll(() => page.evaluate((key) => window.localStorage.getItem(key), ACKNOWLEDGEMENT_STORAGE_KEY))
+      .toBeNull()
   })
 })
 

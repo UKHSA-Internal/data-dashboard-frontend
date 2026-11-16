@@ -10,7 +10,7 @@ export default async function UserSignIn() {
       className="inline-flex items-center gap-3"
       action={async () => {
         'use server'
-        await signIn(defaultAuthProvider)
+        await signIn(defaultAuthProvider, { redirectTo: '/acknowledgement' })
       }}
     >
       <button className="govuk-button govuk-button--start" type="submit">
