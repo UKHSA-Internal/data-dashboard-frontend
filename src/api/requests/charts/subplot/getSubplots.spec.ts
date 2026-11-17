@@ -82,6 +82,14 @@ describe('getSubplots', () => {
         yaxis: { anchor: 'x', domain: [0, 1] },
       },
     },
+    figure_config: {
+      full: { data: [{}], layout: {} },
+      compact: { data: [{}], layout: {} },
+      compact_rotated: {
+        data: [{ orientation: 'h' }],
+        layout: { height: 400 },
+      },
+    },
   }
 
   beforeEach(() => {
