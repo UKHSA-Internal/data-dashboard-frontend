@@ -4,7 +4,7 @@ import { client } from '@/api/utils/api.utils'
 import { chartSizes } from '@/config/constants'
 import { logger } from '@/lib/logger'
 
-import { getCharts, responseSchema } from './getCharts'
+import { FigureConfigSchema, getCharts, responseSchema } from './getCharts'
 import { getDualCategoryCharts, RequestParams as DualCategoryRequestParams } from './getDualCategoryCharts'
 
 let mockIsSSR = false
@@ -17,6 +17,29 @@ jest.mock('@/app/utils/app.utils', () => ({
 
 beforeEach(() => {
   mockIsSSR = false
+})
+
+test('validates all three responsive figure configurations', () => {
+  const mode = { data: [{}], layout: {} }
+
+  expect(
+    FigureConfigSchema.safeParse({
+      full: mode,
+      compact: mode,
+      compact_rotated: mode,
+    }).success
+  ).toBe(true)
+})
+
+test('requires the compact rotated figure configuration', () => {
+  const mode = { data: [{}], layout: {} }
+
+  expect(
+    FigureConfigSchema.safeParse({
+      full: mode,
+      compact: mode,
+    }).success
+  ).toBe(false)
 })
 
 test('Returns a chart svg and last updated date', async () => {
