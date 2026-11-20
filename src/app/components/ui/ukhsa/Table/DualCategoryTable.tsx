@@ -122,7 +122,7 @@ export async function DualCategoryTable({ data, isPublic = false, level, authEna
                               })}
                             >
                               {t('cms.blocks.table.row', {
-                                context: 'stratum',
+                                context: 'plot',
                                 value: item.record[column.accessorKey],
                               })}
                             </th>
