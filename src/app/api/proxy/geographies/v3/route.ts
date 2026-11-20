@@ -6,6 +6,8 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
   const geography_type = searchParams.get('geography_type')
   const isPublic = req.nextUrl.searchParams.get('isPublic') !== 'false'
+  const theme = searchParams.get('theme') || undefined
+  const sub_theme = searchParams.get('sub_theme') || undefined
   if (!geography_type) {
     return new NextResponse('Missing geography_type', {
       status: 500,
@@ -19,8 +21,7 @@ export async function GET(req: NextRequest) {
       status: 500,
     })
   }
-
-  const proxiedResponse = await getGeographies(body, isPublic)
+  const proxiedResponse = await getGeographies(body, isPublic, theme, sub_theme)
 
   if (proxiedResponse.data) {
     return NextResponse.json(proxiedResponse.data)

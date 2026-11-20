@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { Topics } from '@/api/models'
+import { SubTheme, Theme, Topics } from '@/api/models'
 import { Body, CompositeBody, Meta, RelatedLinks, RelatedLinksLayout } from '@/api/models/cms/Page'
 import { Announcements } from '@/api/models/cms/Page/Announcements'
 import { FormFields } from '@/api/models/cms/Page/FormFields'
@@ -88,6 +88,8 @@ const WithTopicData = SharedPageData.extend({
   selected_topics: z.array(Topics).or(fallback([])),
   related_links: RelatedLinks,
   related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
+  selected_themes: z.array(Theme).or(fallback([])).optional(),
+  selected_sub_themes: z.array(SubTheme).or(fallback([])).optional(),
 })
 
 const WithTopicsListData = SharedPageData.extend({
@@ -246,7 +248,6 @@ export const getPage = async <T extends PageType>(id: number) => {
     const { data } = await client<PageResponse<T>>(`pages/${id}`, { searchParams })
 
     const result = responseSchema.safeParse(data)
-
     if (!result.success) {
       logger.error(`WhatsNewResponseSchema Zod Validation error: ${result.error}`)
     }
