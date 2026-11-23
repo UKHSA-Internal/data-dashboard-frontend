@@ -8,12 +8,23 @@ interface AreaSelectorProps {
   areaType: string | undefined
   selectedTopics: Topics[]
   isPublic?: boolean
-  theme?: string
-  sub_theme?: string
+  selectedThemes?: Array<string>
+  selectedSubThemes?: Array<string>
 }
 
-export async function AreaSelector({ areaType, selectedTopics, isPublic, theme, sub_theme }: AreaSelectorProps) {
-  const geographiesResponse = await getGeographies({ topic: selectedTopics[0] }, isPublic, theme, sub_theme)
+export async function AreaSelector({
+  areaType,
+  selectedTopics,
+  isPublic,
+  selectedThemes,
+  selectedSubThemes,
+}: AreaSelectorProps) {
+  const geographiesResponse = await getGeographies(
+    { topic: selectedTopics[0] },
+    isPublic,
+    selectedThemes?.[0],
+    selectedSubThemes?.[0]
+  )
   // Don't show the area selector if we fail to get the geography types
   if (!geographiesResponse.success) {
     logger.error('Could not load area selector %s', geographiesResponse.error)
