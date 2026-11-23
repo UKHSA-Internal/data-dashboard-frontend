@@ -50,6 +50,7 @@ export default async function TopicPage({
     active_announcements: activeAnnouncements,
     is_public: isPublic,
     page_classification: pageClassification,
+    accreditation_badge: accreditationBadge,
   } = await getPageBySlug<PageType.Topic>(slug, { type: PageType.Topic })
 
   let extractedGlobalFilterContent = {} as ExtractedFilters
@@ -78,7 +79,7 @@ export default async function TopicPage({
       {authEnabled && isPublic === false && <ClassificationBanner size="large" level={pageClassification} />}
       <View>
         <>
-          {slug[1] === 'childhood-vaccinations' && (
+          {accreditationBadge !== '' && (
             <img
               className="float-right"
               src={'/assets/images/accredited-official-statistics-logo.svg'}
