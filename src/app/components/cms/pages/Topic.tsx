@@ -112,8 +112,8 @@ export default async function TopicPage({
                       areaType={areaType}
                       selectedTopics={selectedTopics}
                       isPublic={isPublic}
-                      selectedThemes={selectedThemes ?? selectedThemes}
-                      selectedSubThemes={selectedSubThemes ?? selectedSubThemes}
+                      selectedThemes={selectedThemes}
+                      selectedSubThemes={selectedSubThemes}
                     />
                   </Details>
                 </>
