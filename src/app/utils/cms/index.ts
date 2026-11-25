@@ -110,9 +110,19 @@ export async function getPageMetadata(
     if (pageType === PageType.WhatsNewParent) {
       const whatsNewEntries = await getWhatsNewPages({ page })
 
+      // Handle failed API requests.
       if (!whatsNewEntries.success) {
         logger.error(whatsNewEntries.error.message)
         return notFound()
+      }
+
+      // An empty result means the requested page does not exist.
+      // Avoid generating a normal page title alongside the 404 title.
+      if (whatsNewEntries.data.items.length === 0) {
+        return {
+          title: 'Page not found | UKHSA data dashboard',
+          description: 'Error - Page not found',
+        }
       }
 
       const {
