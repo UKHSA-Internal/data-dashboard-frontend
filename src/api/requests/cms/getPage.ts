@@ -88,6 +88,7 @@ const WithTopicData = SharedPageData.extend({
   selected_topics: z.array(Topics).or(fallback([])),
   related_links: RelatedLinks,
   related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
+  accreditation_badge: z.string().nullable().optional(),
 })
 
 const WithTopicsListData = SharedPageData.extend({
