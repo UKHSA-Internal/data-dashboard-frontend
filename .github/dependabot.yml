@@ -6,7 +6,7 @@ updates:
       prefix: "build"
     schedule:
       interval: "cron"
-      crontab: "0 9 1,15 * *"
+      cronjob: "0 9 1,15 * *"
       timezone: "Europe/London"
     open-pull-request-limit: 10
     labels:
@@ -15,13 +15,13 @@ updates:
       production:
         applies-to: version-updates
         dependency-type: "production"
-        update-type:
+        update-types:
           - "patch"
           - "minor"
       development-tooling:
         applies-to: version-updates
         dependency-type: "development"
-        update-type:
+        update-types:
           - "patch"
           - "minor"
 
