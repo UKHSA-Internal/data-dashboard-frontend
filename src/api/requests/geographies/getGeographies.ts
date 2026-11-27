@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { GeographyType, Topics } from '@/api/models'
+import { GeographyType, SubTheme, Theme, Topics } from '@/api/models'
 import { client } from '@/api/utils/api.utils'
 import { isSSR } from '@/app/utils/app.utils'
 import { logger } from '@/lib/logger'
@@ -39,23 +39,31 @@ export type GeographyParams = {
   geography_type?: GeographyType
 }
 
-export const getGeographies = async (params: GeographyParams, isPublic?: boolean) => {
+export const getGeographies = async (
+  params: GeographyParams,
+  isPublic?: boolean,
+  theme?: Theme,
+  sub_theme?: SubTheme
+) => {
   try {
     // Only append isPublic param when explicitly false (non-public pages)
     // undefined or true = public page, no need to pass JWT
-    const publicParam = !isSSR && isPublic === false ? '&isPublic=false' : ''
+    let extraQueryParams = !isSSR && isPublic === false ? '&isPublic=false' : ''
+
     const path = isSSR ? `geographies/v3` : `proxy/geographies/v3`
     if (params.topic && params.geography_type) {
       throw new Error('Only one of topic or geography_type can be provided')
     }
     if (params.topic) {
+      if (isPublic === false && theme && sub_theme) {
+        extraQueryParams += `&theme=${theme}&sub_theme=${sub_theme}`
+      }
       try {
         const { data } = await client<z.infer<typeof responseSchema>>(
-          `${path}?topic=${params.topic}${publicParam}`,
+          `${path}?topic=${params.topic}${extraQueryParams}`,
           {},
           isPublic
         )
-
         const result = responseSchema.safeParse(data)
         if (result.success) {
           return result
@@ -71,7 +79,7 @@ export const getGeographies = async (params: GeographyParams, isPublic?: boolean
     if (params.geography_type) {
       try {
         const { data } = await client<z.infer<typeof responseSchema>>(
-          `${path}?geography_type=${params.geography_type}${publicParam}`,
+          `${path}?geography_type=${params.geography_type}${extraQueryParams}`,
           {},
           isPublic
         )
